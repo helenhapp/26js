@@ -1,0 +1,1897 @@
+/* 🌼 1. ЗМІННІ ТЕМИ */
+
+/* Світла Тема */
+:root {
+  --brand1: rgb(44, 25, 62);
+  --brand2: rgb(103, 66, 135);
+  --brand3: rgb(226, 63, 5);
+  --brand4: rgb(236, 104, 7);
+  --brand5: rgb(192, 159, 203);
+
+  /* Фони */
+  --bg1: #f3f1fd;
+  --bg2: #e6d9f6;
+  --panel: #f9f3fe;
+  --panel-alt: #e7d0fd;
+  --hover-bg: #dcbbfb;
+  --code-bg: #fdf6ff;
+  --soft-callout: rgba(231, 208, 253, 0.45);
+  --link-bg: rgba(231, 208, 253, 0.3);
+  --bar-bg: #e3d3f8;
+
+  /* theme switch/toggle */
+  --toggle: var(--brand2);
+  --toggle2: var(--bg1);
+  --toggle-border: var(--accent-pop);
+
+  /* Текст і посилання */
+  --text-main: var(--brand1);
+  --text-soft: #381b7a;
+  --title: var(--brand2);
+  --link-color: var(--brand2);
+  --header-link-bg: #ffffff;
+
+  /* Рамки та акценти */
+  --accent: var(--brand2);
+  --accent-pop: var(--brand4);
+  --accordion-border: var(--brand2);
+  --tab-border: #462167;
+  --code-border: var(--hover-bg);
+
+  /* Ефекти та тіні */
+  --shadow-accent: rgba(103, 66, 135, 0.4);
+  --title-shadow: 3px 3px 0 var(--brand5);
+  --accordion-shadow: 3px 3px 0 var(--shadow-accent);
+  --code-shadow: 0 0 5px var(--shadow-accent);
+  --accordion-drop-shadow: 3px 3px 0 var(--brand5);
+
+  /* Скролбари */
+  --scrollbar-track: var(--panel-alt);
+  --scrollbar-thumb: var(--brand5);
+  --scrollbar-thumb-hover: var(--brand2);
+
+  interpolate-size: allow-keywords;
+}
+
+/* Темна тема */
+[data-theme="dark"] {
+  /* Фони */
+  --bg1: #1f0c4f;
+  --bg2: var(--brand1);
+  --panel-alt: #240046;
+  --panel: #1a0032;
+  --hover-bg: #2f005b;
+  --code-bg: #140b24;
+  --soft-callout: rgba(36, 0, 70, 0.85);
+  --link-bg: rgb(36, 0, 70, 0.5);
+  --bar-bg: var(--panel);
+
+  /* theme switch/toggle */
+  --toggle: var(--panel-alt);
+  --toggle2: var(--accent-pop);
+  --toggle-border: var(--accent);
+
+  /* Текст та посилання */
+  --text-main: #f0e6f5;
+  --text-soft: #d3c1f3;
+  --title: var(--brand5);
+  --header-link-bg: transparent;
+
+  /* Рамки та акценти */
+  --accent: #462167;
+  --accent-pop: rgb(239, 125, 43);
+  --accordion-border: #462167;
+  --tab-border: #462167;
+  --code-border: var(--accent);
+
+  /* Ефекти та тіні */
+  --shadow-accent: rgba(192, 159, 203, 0.25);
+  --title-shadow: 3px 3px 0 var(--brand2);
+  --accordion-shadow: 0 0 3px var(--code-border);
+  --code-shadow: 0 0 10px var(--shadow-accent);
+  --accordion-drop-shadow: 3px 3px 0 var(--brand2);
+
+  /* Скролбари */
+  --scrollbar-track: var(--bg1);
+  --scrollbar-thumb: var(--accent);
+  --scrollbar-thumb-hover: var(--brand5);
+}
+
+/* 🌿 2. CSS RESET ТА БАЗОВІ СТИЛІ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--text-main);
+  font-family: Arial, sans-serif;
+  min-height: 100dvh;
+  padding-top: 0;
+  background-color: var(--bg1);
+  font-size: 17px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Градієнтний фон */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+  z-index: -1;
+}
+
+main,
+header {
+  width: 92%;
+  max-width: 1000px;
+}
+
+main {
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+/* 🌸 3. ГЛОБАЛЬНІ АНІМАЦІЇ ПЕРЕХОДІВ */
+
+body,
+h1,
+h2,
+h3,
+hr,
+b,
+.accent,
+header a {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    text-shadow 0.4s ease;
+}
+
+.scroll-to-top,
+.answer summary,
+.task summary,
+.toggle-switch,
+.hamburger-btn,
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* 🍀 4. ТЕКСТ */
+
+h1 {
+  font-family: "Press Start 2P", monospace;
+  margin: 15px 0;
+  color: var(--title);
+  text-shadow: var(--title-shadow);
+  line-height: 1.5;
+  letter-spacing: 3px;
+  font-size: clamp(2rem, 7.2vw, 3.5rem);
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  font-weight: 800;
+}
+
+h2,
+h3 {
+  font-family: "Press Start 2P", monospace;
+  font-optical-sizing: auto;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+h2 {
+  font-size: 16px;
+  margin-top: 40px;
+  color: var(--accent);
+}
+
+h3 {
+  font-size: 14px;
+  color: var(--brand2);
+}
+
+/* h3:hover {
+  filter: brightness(1.5);
+  cursor: default;
+} */
+
+h4 {
+  margin: 0.7rem 0;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 15px;
+}
+
+p,
+li {
+  text-align: justify;
+}
+
+p.topic {
+  text-align: center;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+}
+
+.accent {
+  color: var(--accent-pop);
+  font-weight: bold;
+}
+
+.accordion__header .accent {
+  font-weight: normal;
+}
+
+.accent-string {
+  /* color: var(--accent-pop); */
+  /* font-family: "Neucha", cursive; */
+  /* font-size: 19px; */
+  background-color: var(--soft-callout);
+  padding: 2px 4px;
+  /* color: white; */
+}
+
+pre.accent-string {
+  background-color: var(--panel-alt);
+  padding: 5px 7px;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  /* font-size: 0.9rem; */
+  padding: 10px 20px;
+}
+
+/* 🌺 5. ПОСИЛАННЯ ТА ЗОБРАЖЕННЯ */
+
+a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  letter-spacing: 1px;
+}
+
+a:hover {
+  color: var(--accent-pop);
+}
+
+a:hover img {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  max-height: 400px;
+  width: auto;
+  margin: 15px 0;
+  border: 3px solid var(--code-border);
+  border-radius: 6px;
+  transition: all 0.4s ease;
+}
+
+/* Клас для картинок, які можна збільшувати */
+@media (min-width: 650px) {
+  img.zoomable {
+    cursor: zoom-in;
+  }
+
+  img.zoomable:hover {
+    border-color: var(--accent-pop);
+    box-shadow: 0 0 10px var(--panel-alt);
+    transform: scale(1.02) translateY(-2px);
+  }
+
+  img.zoomable.expanded {
+    cursor: zoom-out;
+    width: 100%;
+    max-height: none;
+    height: auto;
+    transform: none;
+  }
+}
+
+/* 🍃 6. КНОПКИ */
+
+button {
+  background-color: var(--panel-alt);
+  color: var(--text-main);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-soft);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Кнопка повернення на початок сторінки */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 50%;
+  background-color: var(--panel-alt);
+  border: 2px solid var(--accent);
+  box-shadow: var(--accordion-shadow);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  user-select: none;
+}
+
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  background-color: var(--hover-bg);
+  transform: translateY(-5px);
+}
+
+/* 🗂 Вкладки (Таби) для частин уроку */
+
+.tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.tab-btn {
+  flex: 1 1 0%;
+  padding: 12px 20px;
+  font-size: 10px;
+  border: 2px outset var(--tab-border);
+  opacity: 0.7;
+  text-align: center;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.tab-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.tab-btn:active {
+  transform: scale(0.93);
+}
+
+/* Активна кнопка (виділена) */
+.tab-btn.active {
+  border-style: inset;
+  transform: scale(0.97);
+  opacity: 0.9;
+  background-color: var(--hover-bg);
+  color: var(--text-main);
+  pointer-events: none;
+}
+
+/* Логіка приховування контенту */
+.tab-content {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Стан 1: Вкладка присутня в документі (але ще прозора) */
+.tab-content.active {
+  display: block;
+}
+
+/* Стан 2: Вкладка плавно стає видимою */
+.tab-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Кнопка для завантаження файлів */
+
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background-color: var(--link-bg);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.download-button:hover {
+  background-color: var(--hover-bg);
+  transform: translateY(-2px);
+  color: var(--text-main);
+  box-shadow: var(--accordion-shadow);
+}
+
+.download-button:active {
+  transform: translateY(2px);
+}
+
+.file-name {
+  font-family: "Fira Code", monospace;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.download-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+/* 🌻 7. СПИСКИ */
+
+ul,
+ol {
+  padding-left: 10px;
+  line-height: 1.6;
+}
+
+ul li::marker,
+ol li::marker {
+  color: var(--text-soft);
+}
+
+ol,
+ul {
+  margin: 0 10px;
+}
+
+li::marker {
+  color: var(--accent);
+}
+
+li.test {
+  list-style-type: none;
+  margin-left: -1.5rem;
+}
+
+.lesson-links {
+  list-style-type: square;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+
+.lesson-links li::marker {
+  color: var(--text-main);
+}
+
+.flex-ol {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+/* 🌱 8. ТАБЛИЦІ */
+
+div.tablecontainer {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: var(--soft-callout);
+}
+
+tr:hover {
+  background-color: var(--hover-bg);
+}
+
+tr:hover td pre:has(code),
+tr:hover td code {
+  border-color: var(--accent-pop);
+}
+
+th,
+td {
+  padding: 15px;
+  border: 2px solid var(--accent);
+  text-align: left;
+  line-height: 1.6;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  min-width: 150px;
+}
+
+th {
+  background-color: var(--panel-alt);
+  color: var(--text-soft);
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+}
+
+td code {
+  display: inline-block;
+  padding: 7px 10px;
+  margin: 0;
+  border-width: 2px;
+  box-shadow: none;
+  font-size: 15px;
+}
+
+/* 🌷 9. КОМПОНЕНТИ МАКЕТУ */
+
+/* Верхня панель та Логотип */
+
+.top-bar,
+footer {
+  height: 50px;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  background-color: var(--bar-bg);
+}
+
+#nav-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease;
+}
+
+#nav-container.scrolled {
+  border-bottom: 1px solid var(--hover-bg);
+  box-shadow: 0 4px 0 var(--soft-callout);
+}
+
+.top-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: var(--text-main);
+  padding: 11px 20px;
+  text-align: center;
+  border-radius: 32px;
+  opacity: 0.75;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  color: var(--text-main);
+  background-color: var(--hover-bg);
+}
+
+/* Кнопка 🍔 */
+.hamburger-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.hamburger-btn:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+
+.logo-container {
+  justify-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.site-logo {
+  margin: 0;
+  height: 54px;
+  padding: 8px 0;
+  width: auto;
+  object-fit: contain;
+  border: none;
+  transition: opacity 0.4s ease;
+}
+
+.logo-light {
+  position: relative;
+  opacity: 1;
+}
+
+.logo-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+[data-theme="dark"] .logo-light {
+  opacity: 0;
+}
+
+[data-theme="dark"] .logo-dark {
+  opacity: 1;
+}
+
+/* Перемикач теми */
+.toggle-switch {
+  justify-self: end;
+  position: relative;
+  display: inline-block;
+  width: 65px;
+  min-width: 65px;
+  height: 32px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--toggle);
+  border: 2px solid var(--toggle-border);
+  border-radius: 32px;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--toggle2);
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+.icon {
+  z-index: 1;
+  user-select: none;
+  font-size: 15px;
+  transition: opacity 0.3s ease;
+}
+
+.sun {
+  padding-left: 2px;
+  opacity: 0;
+}
+
+.moon {
+  padding-right: 3px;
+  opacity: 1;
+}
+
+input:checked + .slider .sun {
+  opacity: 1;
+}
+
+input:checked + .slider .moon {
+  opacity: 0;
+}
+
+input:checked + .slider {
+  background-color: var(--hover-bg);
+}
+
+input:checked + .slider::before {
+  transform: translate(32px, -50%);
+}
+
+/* Хедер */
+header {
+  padding: 15px 0;
+  padding-bottom: 0;
+  text-align: center;
+  font-family: "Press Start 2P", monospace;
+  font-optical-sizing: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+header h2 {
+  color: var(--text-main);
+}
+
+/* header a {
+  display: inline-block;
+  font-size: 10px;
+  min-width: 100px;
+  text-align: center;
+  opacity: 0.75;
+  color: var(--text-main);
+  padding: 6px 3px 3px 3px;
+  border-radius: 5px;
+} */
+
+/* КОНТЕЙНЕР ЗАГОЛОВКА ТА СТРІЛОК */
+.title-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  margin: 15px 0;
+}
+
+.title-container h1 {
+  grid-column: 2;
+  margin: 0;
+}
+
+header a.nav-arrow {
+  min-width: auto;
+  font-size: 24px;
+  padding: 5px;
+  opacity: 0.4;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header a.nav-arrow:hover {
+  opacity: 1;
+  transform: scale(1.2);
+  background-color: transparent;
+}
+
+.prev-arrow {
+  grid-column: 1;
+  justify-self: end;
+}
+
+.next-arrow {
+  grid-column: 3;
+  justify-self: start;
+}
+
+/* Випадаючі списки (акордеон) */
+.accordion {
+  margin: 30px auto;
+}
+
+.accordion p {
+  margin: 15px 0;
+}
+
+.accordion__item {
+  margin-bottom: 15px;
+  background: var(--panel);
+  transition: all 0.4s ease;
+  position: relative;
+  border: solid var(--accordion-border);
+  border-width: 0 2px;
+  border-radius: 0;
+  filter: drop-shadow(var(--accordion-drop-shadow));
+}
+
+.accordion__item::before,
+.accordion__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accordion-border);
+  transition: background 0.4s ease;
+}
+
+.accordion__item::before {
+  top: -2px;
+}
+
+.accordion__item::after {
+  bottom: -2px;
+}
+
+.accordion__item::details-content {
+  height: 0;
+  overflow: hidden;
+  transition:
+    height 0.4s ease-out,
+    content-visibility 0.4s ease-out;
+  transition-behavior: allow-discrete;
+}
+
+.accordion__item[open]::details-content {
+  height: auto;
+}
+
+.accordion__header {
+  padding: 18px;
+  background: var(--panel-alt);
+  /* color: var(--text-soft); */
+  color: var(--brand2);
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease;
+  list-style: none;
+}
+
+[data-theme="dark"] h3,
+[data-theme="dark"] .accordion__header {
+  color: var(--brand5);
+}
+
+.accordion__header::-webkit-details-marker {
+  display: none;
+}
+
+.accordion__header:hover {
+  background: var(--hover-bg);
+}
+
+.accordion__header .star {
+  font-size: 18px;
+}
+
+.star {
+  transform: translateY(-2px);
+  text-shadow: none;
+}
+
+.acc-arrow {
+  transition: transform 0.3s ease;
+}
+
+.accordion__item[open] .acc-arrow {
+  transform: rotate(90deg);
+}
+
+.accordion__content {
+  padding: 0 28px;
+  line-height: 1.6;
+}
+
+.accordion__content > *:first-child {
+  margin-top: 22px;
+}
+
+.accordion__content > *:last-child {
+  margin-bottom: 22px;
+}
+
+.answer {
+  margin-left: 10px;
+}
+
+details {
+  margin: 10px 0;
+}
+
+summary:focus {
+  outline: none;
+}
+
+details.answer summary,
+details.task summary {
+  list-style: none;
+}
+
+details.answer summary::-webkit-details-marker,
+details.task summary::-webkit-details-marker {
+  display: none;
+}
+
+details.answer summary::before,
+details.task summary::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 11px;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+details.answer[open] summary::before,
+details.task[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.answer summary,
+.task summary {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.answer summary:hover,
+.task summary:hover {
+  color: var(--accent-pop);
+}
+
+.task ol,
+.task ul {
+  margin: 0 10px;
+}
+
+.task::details-content {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    height 0.3s ease-out,
+    opacity 0.3s ease-out,
+    content-visibility 0.3s ease-out;
+  transition-behavior: allow-discrete;
+}
+
+.task[open]::details-content {
+  height: auto;
+  opacity: 1;
+}
+
+.task {
+  background-color: var(--soft-callout);
+  border-radius: 6px;
+  margin: 20px 0;
+  transition: background 0.4s ease;
+}
+
+.task summary {
+  padding: 15px 20px;
+  display: block;
+}
+
+.task > :not(summary) {
+  padding: 0 20px 20px 20px;
+}
+
+.task ol,
+.task ul {
+  margin-left: 10px;
+}
+
+.task summary h4 {
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.task:not([open]):hover {
+  background-color: var(--hover-bg);
+}
+
+.task[open] summary:hover h4 {
+  color: var(--accent-pop);
+}
+
+/* Вставки та розділювачі */
+.soft-callout {
+  color: var(--text-soft);
+  background-color: var(--soft-callout);
+  padding: 20px;
+  border-radius: 6px;
+  line-height: 1.6;
+  margin: 20px 0;
+}
+
+.soft-callout h4 {
+  margin: 0;
+}
+
+.objective {
+  text-align: justify;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.objective ul {
+  margin: 0 5px;
+}
+
+.soft-callout.objective {
+  margin-top: 30px;
+}
+
+hr {
+  border: none;
+  border-top: 3px dashed var(--accent-pop);
+  margin: 30px auto;
+  opacity: 0.85;
+}
+
+[data-theme="dark"] hr,
+[data-theme="dark"] .accordion__content hr {
+  opacity: 0.65;
+}
+
+.accordion__content hr {
+  width: 90%;
+}
+
+/* "Завіса" для переходу між сторінками */
+.transition-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 1s ease-in-out,
+    visibility 1s ease-in-out;
+}
+
+body.is-loaded .transition-curtain {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.is-leaving .transition-curtain {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 🍁 10. КОД */
+
+pre:has(code) {
+  margin: 15px 0;
+  background-color: var(--code-bg);
+  border: 3px solid var(--code-border);
+  border-radius: 6px;
+  overflow-x: auto;
+  max-height: 450px;
+  overflow-y: auto;
+  transition: all 0.4s ease;
+}
+
+code {
+  display: inline-block;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  margin: 0;
+  font-family: "Fira Code", monospace;
+  color: var(--text-main);
+  white-space: pre;
+  background: transparent;
+  border: none;
+}
+
+/* Обгортка для кнопки копіювання */
+.code-wrapper {
+  position: relative;
+  margin: 15px 0;
+}
+
+.code-wrapper pre {
+  margin: 0;
+}
+
+.code-wrapper .copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 10px;
+  font-size: 8px;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+}
+
+.code-wrapper:hover .copy-btn {
+  opacity: 0.65;
+  visibility: visible;
+}
+
+.code-wrapper .copy-btn:hover {
+  opacity: 1;
+}
+
+.code-wrapper .copy-btn.copied {
+  background-color: mediumseagreen;
+  color: #ffffff;
+  border-color: var(--accent-pop);
+}
+
+/* Для коду, який не можна копіювати */
+.nocopy {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+pre:has(code.nocopy) {
+  border-radius: 6px 0;
+}
+
+/* 🍙 11. Власний редактор коду для завдань */
+
+.custom-editor-wrapper {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid var(--accent);
+  background: var(--code-bg);
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--panel-alt);
+  padding: 8px 15px;
+  /* border-bottom: 2px dashed var(--accent); */
+  border-bottom: 2px solid var(--accent);
+}
+
+.editor-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  color: var(--text-soft);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.run-btn,
+.reset-btn {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.run-btn:hover,
+.reset-btn:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+
+.run-btn:active,
+.reset-btn:active {
+  background: transparent;
+  transform: scale(0.9);
+}
+
+.custom-editor-input {
+  width: 100%;
+  min-height: 150px;
+  background: var(--code-bg);
+  color: var(--text-main);
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  outline: none;
+  line-height: 1.5;
+  resize: none;
+  white-space: pre;
+  overflow-wrap: normal;
+  border: none;
+  padding: 15px 0 15px 15px;
+  border-right: 15px solid transparent;
+  background-clip: padding-box;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.custom-editor-output {
+  background: var(--panel-alt);
+  color: var(--text-main);
+  border-top: 2px solid var(--accent);
+  margin: 0;
+  padding: 15px;
+  font-family: monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border-radius: 0;
+}
+
+/* Вікно попереднього перегляду для HTML */
+.html-editor-output {
+  width: 100%;
+  min-height: 200px;
+  background-color: #ffffff;
+  border: none;
+  border-top: 2px solid var(--accent);
+  display: block;
+}
+
+/* 🛸 13. ФУТЕР (FOOTER) */
+
+footer {
+  background-color: var(--bar-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+footer p {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 13px;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+
+/* 🖥️ 14. ШИРОКИЙ РЕЖИМ (WIDE MODE) */
+
+.wide-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+  transition: all 0.4s ease;
+  box-shadow: none;
+}
+
+.wide-toggle:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+
+body.wide-mode .wide-toggle {
+  background-color: var(--hover-bg);
+  border-color: var(--accent);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--toggle-border);
+}
+
+@media (min-width: 751px) {
+  body.wide-mode main,
+  body.wide-mode header {
+    width: 92%;
+    max-width: none;
+  }
+}
+
+/* 💐 15. АДАПТИВНІСТЬ */
+
+@media (max-width: 680px) {
+  .tab-btn {
+    flex: 1 1 calc(50% - 15px);
+  }
+}
+@media (max-width: 370px) {
+  .tab-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Мобільна навігація (Ховаємо посилання, показуємо 🍔)
++ ховаємо кнопку широкого екрана 🖥️
+*/
+@media (max-width: 750px) {
+  .hamburger-btn {
+    display: block;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    gap: 0;
+    background-color: var(--panel);
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 0 5px 0 var(--panel-alt);
+  }
+  [data-theme="dark"] .nav-links {
+    background-color: var(--panel-alt);
+    box-shadow: 0 5px 0 var(--panel);
+  }
+  .nav-links.open {
+    display: flex;
+    animation: menuDrop 0.3s ease forwards;
+  }
+  .nav-link {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    border-bottom: 1px solid var(--accordion-border);
+  }
+
+  .nav-link:first-of-type {
+    border-top: 1px solid var(--accordion-border);
+  }
+
+  .wide-toggle {
+    display: none;
+  }
+}
+
+/* Анімація випадання меню */
+@keyframes menuDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 649px) {
+  body {
+    font-size: 16px;
+  }
+  main,
+  header {
+    width: 93%;
+  }
+  .accordion__content {
+    padding: 0 22px;
+  }
+  img {
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+  }
+  code {
+    padding: 10px;
+  }
+  header {
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+    background-position: center;
+  }
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 449px) {
+  :root {
+    --title-shadow: 2px 2px 0 var(--brand5);
+    --accordion-drop-shadow: 2px 2px 0 var(--brand5);
+  }
+  [data-theme="dark"] {
+    --accordion-drop-shadow: 2px 2px 0 var(--brand2);
+    --title-shadow: 2px 2px 0 var(--brand2);
+  }
+  body {
+    font-size: 15px;
+  }
+  main,
+  header {
+    width: 94%;
+  }
+  .objective {
+    text-align: left;
+    line-height: 1.5;
+  }
+  h1 {
+    letter-spacing: 2px;
+  }
+  p,
+  li {
+    text-align: left;
+  }
+  .soft-callout {
+    padding: 10px 15px;
+  }
+  .accordion__item {
+    margin-bottom: 12px;
+  }
+  td code {
+    font-size: 13px;
+  }
+  p.topic {
+    font-size: 12px;
+    padding: 0 5px;
+  }
+  .title-container {
+    gap: 15px;
+  }
+  .download-button {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 🛑 ДОСТУПНІСТЬ: Вимкнення анімацій для чутливих користувачів */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 🛼 16. СКРОЛБАРИ */
+
+/* 1. Стандарт для Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* 2. Стилізація для Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 3px solid var(--scrollbar-track);
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+pre::-webkit-scrollbar,
+.custom-editor-input::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+pre::-webkit-scrollbar-thumb,
+.custom-editor-input::-webkit-scrollbar-thumb {
+  border-width: 2px;
+}
+
+/* 🎬 КОНТЕЙНЕР ДЛЯ ВІДЕО */
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 711px;
+  aspect-ratio: 16 / 9;
+  margin: 20px 0;
+  border: 3px solid var(--code-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--code-bg);
+  transition: all 0.4s ease;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  border: none;
+}
+
+.video-wrapper video {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  object-fit: contain;
+  outline: none;
+}
+
+/* Стилізація CodeMirror */
+
+.CodeMirror {
+  height: auto;
+  min-height: 150px;
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  background-color: var(--code-bg) !important;
+  color: var(--text-main) !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.CodeMirror-scroll {
+  outline: none !important;
+}
+
+.CodeMirror-lines {
+  padding: 15px 0 !important;
+}
+
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 15px !important;
+}
+
+.CodeMirror-gutters {
+  background-color: var(--panel-alt) !important;
+  border-right: 1px dashed var(--accent) !important;
+}
+
+.CodeMirror-linenumber {
+  color: var(--brand5) !important;
+  opacity: 0.8;
+}
+
+.custom-editor-input {
+  display: none;
+}
+
+/* 📝 17. ТЕСТИ ТА ФОРМИ */
+
+.test-question {
+  margin: 20px 0;
+}
+
+.test-question p {
+  font-weight: 600;
+  margin: 20px 0;
+  color: var(--title);
+}
+
+.test-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.test-label:hover {
+  color: var(--accent-pop);
+}
+
+.test-radio,
+.test-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid var(--accent);
+  background-color: var(--code-bg);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  margin: 0;
+}
+
+.test-radio {
+  border-radius: 50%;
+}
+
+.test-radio:checked {
+  border-color: var(--accent-pop);
+}
+
+.test-radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent-pop);
+  border-radius: 50%;
+  animation: popIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.test-checkbox {
+  border-radius: 5px;
+}
+
+.test-checkbox:checked {
+  background-color: var(--accent-pop);
+  border-color: var(--accent-pop);
+}
+
+.test-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  animation: popIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.test-radio:focus-visible,
+.test-checkbox:focus-visible {
+  outline: 2px dashed var(--accent-pop);
+  outline-offset: 3px;
+}
+
+.test-textarea {
+  width: 100%;
+  min-height: 30px;
+  padding: 12px 15px;
+  margin-top: 10px;
+  background-color: var(--code-bg);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.test-textarea::placeholder {
+  color: var(--text-soft);
+  opacity: 0.6;
+}
+
+.test-textarea:focus {
+  outline: none;
+  border-color: var(--brand2);
+}
+
+@keyframes popIn {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.test-checkbox:checked::after {
+  animation: popInCheck 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes popInCheck {
+  to {
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* 🎓 СТИЛІ ДОМАШНЬОГО ЗАВДАННЯ */
+
+.student-info {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.student-info input {
+  background-color: var(--code-bg);
+  color: var(--text-main);
+  border: 2px solid var(--tab-border);
+  padding: 8px 12px;
+  border-radius: 3px;
+  min-width: 250px;
+  font-size: 14px;
+}
+
+.required {
+  color: var(--brand3);
+  font-size: 16px;
+}
+
+.homework-actions {
+  display: flex;
+  gap: 15px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.homework-actions button {
+  font-size: 14px;
+  padding: 10px 20px;
+  flex: 1 1 calc(50% - 15px);
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#save-hw-btn {
+  flex-basis: 100%;
+  padding: 15px;
+  font-size: 16px;
+  background-color: var(--brand2);
+  color: #ffffff;
+  border-color: var(--brand1);
+}
+
+#save-hw-btn:hover {
+  background-color: var(--brand1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Додаємо тінь для об'єму */
+}
+
+#copy-hw-btn {
+  background-color: var(--panel-alt);
+}
+
+#copy-hw-btn:hover {
+  background-color: var(--hover-bg);
+}
+
+.reset-btn-hw {
+  background-color: transparent;
+  color: var(--brand3);
+  border-color: var(--brand3);
+}
+
+.reset-btn-hw:hover {
+  background-color: var(--brand3);
+  color: #ffffff;
+}
+
+.error-highlight {
+  animation: shake 0.4s ease-in-out;
+}
+
+.error-highlight > p,
+.error-highlight.student-info label,
+.error-highlight .editor-title 
+{
+  color: var(--brand3) !important;
+  transition: color 0.3s ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+#hw-error-msg {
+  color: var(--brand3);
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
+  display: none;
+}
+
+.code-wrapper + .test-textarea {
+  margin-top: 0;
+}
+
+input, .test-textarea {
+  font-family: "Fira Code", monospace;
+  font-size: 15px;
+}
+
+@media (max-width: 449px) {
+  .homework-actions button {
+    flex: 1 1 100%;
+  }
+}
+
+/*  Фікс для системного фону при автозаповненні (Autofill) */
+.student-name:-webkit-autofill,
+.student-name:-webkit-autofill:hover,
+.student-name:-webkit-autofill:focus,
+.student-name:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 50px var(--code-bg) inset !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+  font-family: inherit !important;
+}

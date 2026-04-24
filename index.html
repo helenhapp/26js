@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Матеріали для заняття з веб-розробки" />
+
+    <title>Тема: Сучасний Canvas</title>
+
+    <link rel="icon" href="" />
+
+    <script>
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+
+      const hljsThemeLink =
+        savedTheme === "dark"
+          ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+          : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css";
+
+      document.write(
+        `<link id="hljs-theme" rel="stylesheet" href="${hljsThemeLink}" />`,
+      );
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Neucha&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css"
+    />
+
+    <link rel="stylesheet" href="./style.css?v=2.1" />
+    <script defer src="./script.js?v=2.1"></script>
+  </head>
+
+  <body>
+    <div class="transition-curtain"></div>
+
+    <script>
+      window.pageNavLinks = [
+        {
+          name: "Редактор",
+          url: "https://editor.webuniverseua.com",
+          newTab: true,
+        },
+      ];
+    </script>
+    <div id="nav-container"></div>
+
+    <header>
+      <div class="title-container">
+        <h1>Тема 25</h1>
+      </div>
+
+      <p class="topic">Події клавіатури на canvas</p>
+
+      <section class="soft-callout objective">
+        <span class="accent">Мета заняття:</span>
+        <ul>
+          <li>
+            Навчитися працювати з елементом
+            <span class="accent">canvas</span> за допомогою сучасного стандарту
+            JavaScript (ES6+).
+          </li>
+          <li>
+            Зрозуміти принцип створення об'єктів за допомогою
+            <span class="accent">class</span> (Об'єктно-орієнтоване
+            програмування).
+          </li>
+          <li>
+            Реалізувати керування об'єктом (рух, зміна швидкості та розміру) за
+            допомогою клавіатури.
+          </li>
+          <li>
+            Створити плавний цикл анімації за допомогою
+            <span class="accent">requestAnimationFrame</span>.
+          </li>
+        </ul>
+      </section>
+
+      <hr />
+    </header>
+
+    <main>
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-target="part-1">Частина 1</button>
+        <button class="tab-btn" data-target="part-2">Частина 2</button>
+        <button class="tab-btn" data-target="part-3">Частина 3</button>
+        <button class="tab-btn" data-target="part-4">Частина 4</button>
+      </div>
+
+      <section id="part-1" class="accordion tab-content active show">
+        <details class="accordion__item" name="section1" open>
+          <summary class="accordion__header">
+            <div>
+              <span class="star">✧</span> Підготовка:
+              <span class="accent">HTML та CSS</span>
+            </div>
+            <span class="acc-arrow">▶</span>
+          </summary>
+          <div class="accordion__content">
+            <p>
+              Елемент <span class="accent">&lt;canvas&gt;</span> призначений для
+              створення растрової графіки за допомогою JavaScript. Додай цей тег
+              усередину тегу <span class="accent">&lt;body&gt;</span> твого
+              HTML-файлу:
+            </p>
+            <pre><code class="language-html">&lt;canvas id="canvas" width="500" height="500"&gt;&lt;/canvas&gt;</code></pre>
+
+            <p>
+              Щоб полотно було чітко видимим і розташовувалося по центру вікна
+              браузера, додай наступні базові стилі у свій CSS файл:
+            </p>
+            <pre><code class="language-css">body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+canvas {
+  background-color: white;
+  border: 2px solid #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}</code></pre>
+          </div>
+        </details>
+
+        <details class="accordion__item" name="section1">
+          <summary class="accordion__header">
+            <div>
+              <span class="star">✧</span> Крок 1:
+              <span class="accent"
+                >Ініціалізація Canvas та функція малювання</span
+              >
+            </div>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <h3>Отримання контексту</h3>
+            <p>
+              Щоб малювати на полотні, необхідно отримати його
+              <strong>контекст</strong> — спеціальний об'єкт, який містить усі
+              методи для малювання плоских (2D) фігур.
+            </p>
+
+            [Image of HTML5 Canvas coordinate system]
+
+            <pre><code class="language-javascript">// 1. Знаходимо елемент полотна на сторінці
+const canvas = document.getElementById("canvas");
+
+// 2. Отримуємо 2D-контекст для доступу до методів малювання
+const ctx = canvas.getContext("2d");
+
+// 3. Зберігаємо розміри полотна у змінні для подальших розрахунків
+const width = canvas.width;
+const height = canvas.height;</code></pre>
+
+            <hr />
+
+            <h3>Функція малювання кола</h3>
+            <p>
+              Оскільки ми будемо малювати коло багаторазово, доцільно винести
+              цей процес в окрему функцію. Вона прийматиме параметри позиції,
+              розміру та кольору.
+            </p>
+
+            <pre><code class="language-javascript">// Функція для малювання кола
+const drawCircle = (x, y, radius, fillCircle, color) => {
+  ctx.beginPath(); // Починаємо новий шлях малювання
+  ctx.arc(x, y, radius, 0, Math.PI * 2, false); // Формуємо дугу на 360 градусів
+  ctx.fillStyle = color; // Встановлюємо колір
+  
+  if (fillCircle) {
+    ctx.fill(); // Заливаємо фігуру кольором
+  } else {
+    ctx.stroke(); // Малюємо лише контур
+  }
+};</code></pre>
+
+            <section class="soft-callout">
+              <h4>🧪 Проміжне тестування</h4>
+              <p>
+                Перевіримо, чи коректно працює налаштований контекст та наша
+                функція. Додай цей рядок внизу скрипта:
+              </p>
+              <pre><code class="language-javascript">drawCircle(width / 2, height / 2, 50, true, "red");</code></pre>
+              <p>
+                Після запуску коду ти маєш побачити червоне коло рівно по центру
+                полотна. Якщо все працює успішно,
+                <strong>цей тестовий рядок можна видалити</strong>.
+              </p>
+            </section>
+          </div>
+        </details>
+      </section>
+
+      <section id="part-2" class="accordion tab-content">
+        <details class="accordion__item" name="section2" open>
+          <summary class="accordion__header">
+            <div>
+              <span class="star">✧</span> Крок 2:
+              <span class="accent">Створення Класу Ball</span>
+            </div>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <h3>Основи роботи з класами</h3>
+            <p>
+              У програмуванні <strong>Клас (Class)</strong> — це креслення або
+              загальне правило для створення об'єктів. Щоб не прописувати
+              властивості кожного м'яча окремо, ми описуємо їх лише один раз у
+              класі, а браузер потім зможе створити за цим правилом скільки
+              завгодно м'ячів.
+            </p>
+            <p>
+              Усередині класу є спеціальний блок —
+              <span class="accent">constructor()</span>. Це своєрідні стартові
+              налаштування. Він запускається автоматично щоразу, коли ми
+              створюємо новий об'єкт, і одразу видає йому початкові
+              характеристики: стартові координати, базову швидкість, розмір та
+              колір.
+            </p>
+
+            <pre><code class="language-javascript">class Ball {
+  constructor() {
+    this.x = width / 2;   // Позиція по горизонталі
+    this.y = height / 2;  // Позиція по вертикалі
+    this.xSpeed = 5;      // Вектор швидкості по осі X
+    this.ySpeed = 0;      // Вектор швидкості по осі Y
+    this.radius = 10;     // Радіус об'єкта
+    this.color = "black"; // Колір заливки
+    this.speed = 5;       // Базовий модуль швидкості
+  }
+
+  // Метод для відображення об'єкта на полотні
+  draw() {
+    drawCircle(this.x, this.y, this.radius, true, this.color);
+  }
+}</code></pre>
+
+            <section class="soft-callout">
+              <h4>🧪 Проміжне тестування</h4>
+              <p>
+                Щоб створити реальний об'єкт за шаблоном, потрібно використати
+                ключове слово <span class="accent">new</span>. Напиши під
+                закриваючою дужкою класу:
+              </p>
+              <pre><code class="language-javascript">const ball = new Ball(); // Створюємо екземпляр класу
+ball.draw();             // Викликаємо метод малювання</code></pre>
+              <p>
+                На екрані має з'явитися чорний об'єкт. Це означає, що клас
+                працює коректно.
+              </p>
+            </section>
+
+            <hr />
+
+            <h3>Логіка руху та перевірка зіткнень</h3>
+
+            <p class="soft-callout">
+              <strong>Важливо:</strong> наступний метод потрібно додати
+              <strong>всередину</strong> класу <span class="accent">Ball</span>,
+              одразу після методу <span class="accent">draw()</span>.
+            </p>
+
+            <p>
+              Метод <span class="accent">move()</span> відповідає за рух
+              об'єкта, постійно змінюючи його координати. Також він стежить, щоб
+              об'єкт не вилетів за межі екрана: якщо м'яч торкається краю
+              полотна, ми змінюємо його швидкість на протилежну (наприклад, з 5
+              на -5). Завдяки цьому математичному трюку м'яч "відбивається" від
+              стінки і починає летіти в інший бік.
+            </p>
+
+            <pre><code class="language-javascript">  move() {
+    // Оновлюємо координати
+    this.x += this.xSpeed;
+    this.y += this.ySpeed;
+
+    // Перевірка зіткнення по осі X (ліва та права стінки)
+    if (this.x - this.radius < 0 || this.x + this.radius > width) {
+      this.xSpeed = -this.xSpeed;
+    }
+
+    // Перевірка зіткнення по осі Y (верхня та нижня стінки)
+    if (this.y - this.radius < 0 || this.y + this.radius > height) {
+      this.ySpeed = -this.ySpeed;
+    }
+  }</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="part-3" class="accordion tab-content">
+        <details class="accordion__item" name="section3" open>
+          <summary class="accordion__header">
+            <div>
+              <span class="star">✧</span> Крок 3:
+              <span class="accent">Методи керування об'єктом</span>
+            </div>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <p class="soft-callout">
+              Ці методи дозволяють нам віддавати команди об'єкту. Розміщуємо їх
+              <strong>всередині</strong> класу <span class="accent">Ball</span>.
+            </p>
+
+            <h3>Керування напрямком</h3>
+            <p>
+              Метод <span class="accent">setDirection()</span> отримує команду —
+              слово, яке вказує напрямок руху (наприклад, "up" або "right"). Щоб
+              м'яч рухався чітко прямо і не летів по діагоналі, ми повинні
+              правильно розподілити його швидкість. Тобто, якщо ми наказуємо
+              м'ячу рухатись вгору, ми повністю зупиняємо його рух вліво чи
+              вправо (ставимо <span class="accent">xSpeed</span> на 0), і
+              направляємо всю його базову швидкість лише на рух вгору (у змінну
+              <span class="accent">ySpeed</span>).
+            </p>
+
+            <pre><code class="language-javascript">  setDirection(direction) {
+    if (direction === "up") {
+      this.xSpeed = 0;              
+      this.ySpeed = -this.speed;    // Рух вгору (з мінусом)
+    } else if (direction === "down") {
+      this.xSpeed = 0;
+      this.ySpeed = this.speed;     // Рух вниз (додатній)
+    } else if (direction === "left") {
+      this.xSpeed = -this.speed;    // Рух вліво (з мінусом)
+      this.ySpeed = 0;
+    } else if (direction === "right") {
+      this.xSpeed = this.speed;     // Рух вправо (додатній)
+      this.ySpeed = 0;
+    } else if (direction === "stop") {
+      this.xSpeed = 0;              // Повна зупинка
+      this.ySpeed = 0;
+    }
+  }</code></pre>
+
+            <hr />
+
+            <h3>Зміна розміру та швидкості</h3>
+            <p>
+              Ці методи дозволяють змінювати властивості м'яча прямо під час
+              гри. Ми використовуємо перевірку <span class="accent">if</span>,
+              щоб м'яч не став занадто малим і не зник з екрана, а також щоб він
+              не міг повністю зупинитися або почати рухатися у зворотному
+              напрямку без команди.
+            </p>
+
+            <pre><code class="language-javascript">  changeSize(change) {
+    // Додаємо передане значення change до поточного радіуса м'яча.
+    // Якщо параметр change додатний (наприклад, 1), радіус збільшиться.
+    // Якщо параметр change від'ємний (наприклад, -1), радіус зменшиться.
+    this.radius += change; 
+
+    // Захисна перевірка: щоб м'яч візуально не зник з екрана.
+    // Якщо після обчислень радіус виявився меншим за 5 пікселів, 
+    // ми примусово встановлюємо його на рівні 5.
+    if (this.radius < 5) {
+      this.radius = 5; 
+    }
+  }</code></pre>
+
+            <pre><code class="language-javascript">changeSpeed(change) {
+    this.speed += change;
+    // Швидкість не може бути меншою за 1
+    if (this.speed < 1) {
+      this.speed = 1; 
+    }
+
+    // Оновлюємо поточну швидкість м'яча, щоб він одразу прискорився або сповільнився.
+    
+    // Перевіряємо горизонталь (вісь X): чи м'яч взагалі рухається вбік?
+    if (this.xSpeed !== 0) {
+      // Якщо швидкість більша за нуль, значить він летить вправо
+      if (this.xSpeed > 0) {
+        this.xSpeed = this.speed;  // Даємо нову швидкість (додатне число)
+      } else {
+        this.xSpeed = -this.speed; // Інакше він летить вліво (робимо число від'ємним)
+      }
+    }
+
+    // Перевіряємо вертикаль (вісь Y): чи м'яч рухається вгору або вниз?
+    if (this.ySpeed !== 0) {
+      // Якщо швидкість більша за нуль, значить він летить вниз
+      if (this.ySpeed > 0) {
+        this.ySpeed = this.speed;  // Даємо нову швидкість (додатне число)
+      } else {
+        this.ySpeed = -this.speed; // Інакше він летить вгору (робимо число від'ємним)
+      }
+    }</code></pre>
+
+            <section class="soft-callout">
+              <h4>🧪 Проміжне тестування</h4>
+              <p>
+                Давай перевіримо, чи вміє м'яч виконувати команди. У кінці файлу
+                (після створення об'єкта) додай ці рядки:
+              </p>
+              <pre><code class="language-javascript">ball.changeSize(20);         // М'яч має стати більшим
+ball.setDirection("right");  // М'яч має підготуватися до руху вправо
+ball.move();                 // Робимо один крок
+ball.draw();                 // Малюємо результат</code></pre>
+              <p>
+                Якщо м'яч на екрані збільшився і змістився вправо — методи
+                працюють правильно.
+                <strong
+                  >Після перевірки ці тестові рядки можна видалити.</strong
+                >
+              </p>
+            </section>
+          </div>
+        </details>
+      </section>
+
+      <section id="part-4" class="accordion tab-content">
+        <details class="accordion__item" name="section4" open>
+          <summary class="accordion__header">
+            <div>
+              <span class="star">✧</span> Крок 4:
+              <span class="accent">Обробка подій та Цикл анімації</span>
+            </div>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <p class="soft-callout">
+                <strong>Увага:</strong> Весь код цієї частини ми пишемо <strong>після</strong> фігурної дужки, яка закриває клас <span class="accent">Ball</span>. Ми завершили створення "креслення" і тепер переходимо до керування програмою.
+            </p>
+
+            <h3>Словник команд</h3>
+            <p>
+              Створюємо об'єкт (словник), який зіставляє системні назви
+              клавіш з нашими командами управління.
+            </p>
+
+            <pre><code class="language-javascript">const keyActions = {
+  " ": "stop",              // Клавіша Пробіл
+  "ArrowLeft": "left",      // Стрілка вліво
+  "ArrowUp": "up",          // Стрілка вгору
+  "ArrowRight": "right",    // Стрілка вправо
+  "ArrowDown": "down",      // Стрілка вниз
+  "z": "slowDown",          // Літера Z - зменшити швидкість
+  "x": "speedUp",           // Літера X - збільшити швидкість
+  "c": "decreaseSize",      // Літера C - зменшити розмір
+  "v": "increaseSize"       // Літера V - збільшити розмір
+};</code></pre>
+
+            <hr />
+
+            <h3>Обробник події "keydown"</h3>
+            <p>
+              Метод <span class="accent">addEventListener</span> прослуховує
+              натискання клавіш. Отримавши
+              <span class="accent">event.key</span>, ми знаходимо дію у словнику
+              та викликаємо необхідний метод.
+            </p>
+
+            <pre><code class="language-javascript">// Слухаємо натискання клавіш по всьому документу
+document.addEventListener("keydown", (event) => {
+  
+  // Створюємо змінну, де будемо зберігати назву клавіші
+  let key;
+
+  // Перевіряємо довжину назви клавіші. 
+  // У звичайних літер та цифр довжина назви дорівнює 1 (наприклад, "z", "x", "1").
+  // У системних клавіш назва довга (наприклад, "ArrowUp", "Shift", "Escape").
+  if (event.key.length === 1) {
+    // Якщо це одиночний символ (літера), робимо його маленьким.
+    // Це потрібно для того, щоб програма впізнала клавішу навіть при CapsLock.
+    key = event.key.toLowerCase();
+  } else {
+    // Якщо це системна клавіша (наприклад, стрілка), залишаємо назву як є.
+    key = event.key;
+  }
+  
+  // Шукаємо отриману назву клавіші в нашому "словнику" команд
+  const action = keyActions[key];
+  
+  // Якщо такої клавіші в словнику немає — нічого не робимо (виходимо з функції)
+  if (!action) {
+    return; 
+  }
+
+  // Перевіряємо, яку саме дію знайдено, і передаємо наказ м'ячу
+  if (action === "slowDown") {
+    ball.changeSpeed(-1); // Сповільнюємо
+  } else if (action === "speedUp") {
+    ball.changeSpeed(1);  // Прискорюємо
+  } else if (action === "decreaseSize") {
+    ball.changeSize(-1);  // Зменшуємо
+  } else if (action === "increaseSize") {
+    ball.changeSize(1);   // Збільшуємо
+  } else {
+    // Якщо це команда напрямку ("up", "down", "left", "right" або "stop")
+    ball.setDirection(action); 
+  }
+});</code></pre>
+
+            <hr />
+
+            <h3>Реалізація анімаційного циклу</h3>
+            <p>
+              Анімація створюється шляхом безперервного перемальовування
+              полотна. Стандартом для цього є функція
+              <span class="accent">requestAnimationFrame</span>.
+            </p>
+
+            <pre><code class="language-javascript">function animate() {
+  // 1. Очищення полотна від попереднього кадру
+  ctx.clearRect(0, 0, width, height);
+
+  // 2. Відображення об'єкта
+  ball.draw();
+  
+  // 3. Перерахунок координат для наступного кадру
+  ball.move();
+
+  // 4. Відображення зовнішньої рамки
+  ctx.strokeRect(0, 0, width, height);
+
+  // 5. Запит на виклик цієї ж функції для наступного кадру
+  requestAnimationFrame(animate); 
+}
+
+// Запуск анімації
+animate();</code></pre>
+
+            <section class="soft-callout">
+              <h4>🏁 Фінальне тестування</h4>
+              <p>
+                Тепер об'єкт має плавно переміщуватись. Використовуй стрілки для
+                зміни напрямку, Z/X для швидкості та C/V для розміру. Пробіл
+                зупинить рух.
+              </p>
+            </section>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 WebUniverse — Усі права захищені.</p>
+    </footer>
+
+    <button
+      id="scrollToTopBtn"
+      class="scroll-to-top"
+      aria-label="Повернутися нагору"
+    >
+      🛸
+    </button>
+  </body>
+</html>
