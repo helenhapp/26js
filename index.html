@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Матеріали для заняття з веб-розробки" />
 
-    <title>Тема: Сучасний Canvas</title>
+    <!-- ❗️ Назва на вкладці -->
+    <title>Pong Tutorial</title>
 
+    <!-- ❗️ Фавіконка (зараз немає) -->
     <link rel="icon" href="" />
 
+    <!-- Скрипт перемикання теми -->
     <script>
-      const savedTheme = localStorage.getItem("theme") || "light";
+      const savedTheme = localStorage.getItem("wu_theme") || "light";
       document.documentElement.setAttribute("data-theme", savedTheme);
 
       const hljsThemeLink =
@@ -18,11 +21,13 @@
           ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
           : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css";
 
-      document.write(
+      document.head.insertAdjacentHTML(
+        "beforeend",
         `<link id="hljs-theme" rel="stylesheet" href="${hljsThemeLink}" />`,
       );
     </script>
 
+    <!-- Підключення шрифтів (Google Fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,34 +41,58 @@
       rel="stylesheet"
     />
 
+    <!-- Підсвітка коду (Highlight.js) -->
     <script
       defer
       src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
     ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"
+    ></script>
 
+    <!-- CodeMirror -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"
+    ></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"
+    ></script>
 
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css"
     />
 
-    <link rel="stylesheet" href="./style.css?v=2.1" />
-    <script defer src="./script.js?v=2.1"></script>
+    <!-- Власні стилі та скрипти -->
+    <link rel="stylesheet" href="./style.css?v=5.1" />
+    <script defer src="./script.js?v=5.1"></script>
   </head>
 
   <body>
+    <!-- "Завіса", яка плавно зникає при завантаженні сторінки -->
     <div class="transition-curtain"></div>
 
+    <!-- Панель з навігацією -->
     <script>
       window.pageNavLinks = [
         {
@@ -75,499 +104,1144 @@
     </script>
     <div id="nav-container"></div>
 
+    <!-- Хедер з назвою теми та посиланнями -->
     <header>
       <div class="title-container">
-        <h1>Тема 25</h1>
+        <h1 style="font-size: clamp(1.5rem, 5vw, 2.6rem)" id="lesson-title">
+          Туторіал 1
+        </h1>
       </div>
 
-      <p class="topic">Події клавіатури на canvas</p>
+      <p class="topic">Гра "Настільний теніс"</p>
 
+      <!-- Короткий зміст заняття -->
       <section class="soft-callout objective">
-        <span class="accent">Мета заняття:</span>
+        <span class="accent">Зміст уроку:</span>
         <ul>
+          <li>Частина 1: Lorem ipsum dolor sit amet.</li>
           <li>
-            Навчитися працювати з елементом
-            <span class="accent">canvas</span> за допомогою сучасного стандарту
-            JavaScript (ES6+).
+            Частина 2: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Officiis, quasi!
           </li>
           <li>
-            Зрозуміти принцип створення об'єктів за допомогою
-            <span class="accent">class</span> (Об'єктно-орієнтоване
-            програмування).
+            Частина 3: Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </li>
           <li>
-            Реалізувати керування об'єктом (рух, зміна швидкості та розміру) за
-            допомогою клавіатури.
+            Частина 4: Lorem ipsum dolor sit amet consectetur adipisicing.
           </li>
-          <li>
-            Створити плавний цикл анімації за допомогою
-            <span class="accent">requestAnimationFrame</span>.
-          </li>
+          <li>Частина 5: Lorem ipsum dolor sit amet consectetur.</li>
         </ul>
       </section>
 
       <hr />
     </header>
 
+    <!-- Основний контент -->
     <main>
       <div class="tabs-nav">
-        <button class="tab-btn active" data-target="part-1">Частина 1</button>
-        <button class="tab-btn" data-target="part-2">Частина 2</button>
-        <button class="tab-btn" data-target="part-3">Частина 3</button>
-        <button class="tab-btn" data-target="part-4">Частина 4</button>
+        <button class="tab-btn active" data-target="part-1">Вступ</button>
+        <button class="tab-btn" data-target="part-2">Графіка</button>
+        <button class="tab-btn" data-target="part-3">Керування</button>
+        <button class="tab-btn" data-target="part-4">Логіка</button>
+        <button class="tab-btn" data-target="part-5">Деталі</button>
       </div>
 
+      <!-- 🧩 ЧАСТИНА 1 -->
+
       <section id="part-1" class="accordion tab-content active show">
-        <details class="accordion__item" name="section1" open>
-          <summary class="accordion__header">
-            <div>
-              <span class="star">✧</span> Підготовка:
-              <span class="accent">HTML та CSS</span>
-            </div>
-            <span class="acc-arrow">▶</span>
-          </summary>
-          <div class="accordion__content">
-            <p>
-              Елемент <span class="accent">&lt;canvas&gt;</span> призначений для
-              створення растрової графіки за допомогою JavaScript. Додай цей тег
-              усередину тегу <span class="accent">&lt;body&gt;</span> твого
-              HTML-файлу:
-            </p>
-            <pre><code class="language-html">&lt;canvas id="canvas" width="500" height="500"&gt;&lt;/canvas&gt;</code></pre>
-
-            <p>
-              Щоб полотно було чітко видимим і розташовувалося по центру вікна
-              браузера, додай наступні базові стилі у свій CSS файл:
-            </p>
-            <pre><code class="language-css">body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f0f0f0;
-}
-
-canvas {
-  background-color: white;
-  border: 2px solid #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}</code></pre>
-          </div>
-        </details>
-
+        <!-- 📚 Крок 1.1 -->
         <details class="accordion__item" name="section1">
           <summary class="accordion__header">
-            <div>
-              <span class="star">✧</span> Крок 1:
-              <span class="accent"
-                >Ініціалізація Canvas та функція малювання</span
-              >
-            </div>
+            <h2>
+              <span class="star">✧</span> Частина 1.1:
+              <span class="accent">Вступ</span>
+            </h2>
             <span class="acc-arrow">▶</span>
           </summary>
 
           <div class="accordion__content">
-            <h3>Отримання контексту</h3>
+            <!-- 1 -->
+            <h3>Історія гри</h3>
+
             <p>
-              Щоб малювати на полотні, необхідно отримати його
-              <strong>контекст</strong> — спеціальний об'єкт, який містить усі
-              методи для малювання плоских (2D) фігур.
+              Історія гри <span class="accent">Pong</span> (укр. Настільний
+              теніс) — це розповідь про те, як народилася
+              <span class="accent">сучасна індустрія відеоігор</span>!
             </p>
 
-            [Image of HTML5 Canvas coordinate system]
+            <ul>
+              <li>
+                Pong не була найпершою грою, але стала першим в історії
+                <span class="accent">суперхітом</span>. Саме після її шаленого
+                успіху люди зрозуміли, що відеоігри — це майбутнє, і почали
+                масово їх створювати.
+              </li>
+              <li>
+                Автор цієї гри написав її лише як
+                <span class="accent">"навчальне завдання"</span>, щоб
+                попрактикуватися. Ніхто не очікував, що два прямокутники та
+                крапка <span class="accent">змінять світ</span>.
+              </li>
+              <li>
+                Перший ігровий автомат поставили для перевірки в барі. За кілька
+                днів він зламався... бо відвідувачі накидали в нього
+                <span class="accent">так багато монет</span>, що вони там просто
+                застрягли!
+              </li>
+              <li>
+                Коли з'явилася домашня версія Pong, за нею вишиковувалися
+                <span class="accent">величезні черги</span>. Вона здійснила
+                справжній переворот: якщо раніше телевізор можна було лише
+                дивитися, то тепер люди вперше змогли
+                <span class="accent">керувати</span> тим, що відбувається на
+                екрані.
+              </li>
+            </ul>
 
-            <pre><code class="language-javascript">// 1. Знаходимо елемент полотна на сторінці
-const canvas = document.getElementById("canvas");
+            <p>
+              На цьому занятті ви дізнаєтеся, як можна самостійно написати код
+              для цієї гри!
+            </p>
 
-// 2. Отримуємо 2D-контекст для доступу до методів малювання
-const ctx = canvas.getContext("2d");
-
-// 3. Зберігаємо розміри полотна у змінні для подальших розрахунків
-const width = canvas.width;
-const height = canvas.height;</code></pre>
+            <img src="./images/pong.png" alt="pong game" />
 
             <hr />
 
-            <h3>Функція малювання кола</h3>
+            <!-- 2 -->
+            <h3>Підхід до створення ігор</h3>
+
             <p>
-              Оскільки ми будемо малювати коло багаторазово, доцільно винести
-              цей процес в окрему функцію. Вона прийматиме параметри позиції,
-              розміру та кольору.
+              Cтворення гри — це ітеративний процес. Cпочатку ми робимо так, щоб
+              гра працювала, а потім — додаємо різні деталі, щоб у неї було
+              зручно та цікаво грати.
             </p>
 
-            <pre><code class="language-javascript">// Функція для малювання кола
-const drawCircle = (x, y, radius, fillCircle, color) => {
-  ctx.beginPath(); // Починаємо новий шлях малювання
-  ctx.arc(x, y, radius, 0, Math.PI * 2, false); // Формуємо дугу на 360 градусів
-  ctx.fillStyle = color; // Встановлюємо колір
-  
-  if (fillCircle) {
-    ctx.fill(); // Заливаємо фігуру кольором
-  } else {
-    ctx.stroke(); // Малюємо лише контур
-  }
-};</code></pre>
+            <h4>1. Мінімальна робоча версія (MVP)</h4>
 
-            <section class="soft-callout">
-              <h4>🧪 Проміжне тестування</h4>
+            <p>
+              Це "скелет" гри. У ній є лише найнеобхідніше, щоб у неї взагалі
+              можна було грати. Якщо забрати бодай один із цих пунктів, гра
+              перестане працювати.
+            </p>
+
+            <ul>
+              <li>
+                <span class="accent">Ігрове поле:</span> Намальоване полотно
+                (canvas) з чіткими межами.
+              </li>
+              <li>
+                <span class="accent">Гравці (ракетки):</span> Дві ракетки
+                (прямокутники). Ліва ракетка керується гравцем за допомогою
+                клавіш (W — вгору, S — вниз). Права ракетка рухається
+                автоматично, виконуючи роль простого комп'ютерного супротивника.
+              </li>
+              <li>
+                <span class="accent">М'яч:</span> Круглий м'яч, який постійно
+                рухається на полотні.
+              </li>
+              <li>
+                <span class="accent">Фізика:</span> М'яч відбивається від
+                верхньої та нижньої меж полотна (стелі та підлоги), а також від
+                обох ракеток. Ракетки не можуть виїхати за межі полотна.
+              </li>
+              <li>
+                <span class="accent">Правила гри (рахунок):</span> Якщо м'яч
+                вилітає за правий або лівий край полотна, то гравець, який забив
+                гол, отримує один бал. Після цього м'яч повертається в центр
+                полотна і гра продовжується. Рахунок відображається на екрані.
+              </li>
+            </ul>
+
+            <h4>2. Деталі, що роблять гру цікавішою</h4>
+
+            <p>
+              Ці деталі не є обов'язковими для того, щоб гра працювала, але саме
+              завдяки їм вона стає справді цікавою.
+            </p>
+
+            <ul>
+              <li>
+                <span class="accent">Динамічна складність:</span> М'яч починає
+                рухатися повільно (baseSpeed), але при кожному відбиванні від
+                ракетки трохи прискорюється (до певного ліміту maxSpeed). Це
+                додає азарту! Після кожного забитого голу швидкість скидається
+                назад до базової.
+              </li>
+              <li>
+                <span class="accent">Баланс бота:</span> Якщо комп'ютер бачитиме
+                м'яч завжди, його буде неможливо перемогти. Щоб зробити гру
+                чесною, бот починає реагувати на м'яч лише тоді, коли той
+                перетинає центральну лінію полотна (botSeesBall). Крім того,
+                ракетка бота має трохи меншу швидкість, ніж у гравця.
+              </li>
+              <li>
+                <span class="accent">Зрозумілий інтерфейс:</span> Гра не
+                починається миттєво — є кнопка "Почати гру", та невелика пауза
+                після її натиску ("Приготуйтеся..."), щоб гравець встиг покласти
+                руки на клавіатуру. Перед початком гри з'являється спливаюче
+                вікно із правилами.
+              </li>
+              <li>
+                <span class="accent">Умови перемоги та програшу:</span> Гра не
+                триває нескінченно. Встановлено ліміт (наприклад, поки хтось не
+                забʼє три голи), після досягнення якого гра зупиняється і
+                з'являється повідомлення для гравця про перемогу або програш.
+              </li>
+            </ul>
+          </div>
+        </details>
+
+        <!-- 📚 Крок 1.2 -->
+        <details class="accordion__item" name="section1">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 1.2:
+              <span class="accent">Налаштування</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Створити "сцену" для гри та підключити її до JavaScript.</p>
+
+            <ol>
+              <li>
+                <span class="accent">HTML/CSS.</span> Створення розмітки
+                сторінки: заголовок, блок для рахунку та саме ігрове поле
+                (canvas). Стилізація цих елементів для гарного вигляду.
+              </li>
+              <li>
+                <span class="accent">JS Налаштування.</span> Отримання доступу
+                до полотна та до інструментів для малювання (<span
+                  class="accent-string"
+                  >canvas.getContext("2d")</span
+                >), збереження розмірів полотна. Створення базових змінних для
+                рахунку (<span class="accent-string">score1</span>,
+                <span class="accent-string">score2</span>) та прив'язка
+                HTML-елементів до JS.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- 2 -->
+            <h3>Підготовка</h3>
+
+            <a href="./download/pong.zip" download class="download-button">
+              <span class="download-arrow">📥</span>
+              <span class="file-name">pong.zip</span>
+            </a>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 0: Підготовка файлів</h4>
+              <ol>
+                <li>
+                  Натисніть на кнопку вище, щоб завантажити стартові файли
+                  проєкту. Розархівуйте їх.
+                </li>
+                <li>
+                  Переконайтеся, що у папці є три файли:
+                  <span class="accent-string">index.html</span>,
+                  <span class="accent-string">style.css</span> та
+                  <span class="accent-string">script.js</span>.
+                </li>
+                <li>
+                  Відкрийте папку у своєму редакторі коду, а файл
+                  <span class="accent-string">index.html</span> — у браузері.
+                </li>
+              </ol>
+            </div>
+
+            <p>
+              В <span class="accent">index.html</span> вже є базовий скелет
+              сайту, підключені стилі та скрипти. Також там вже є заголовок
+              сторінки та параграф для відображення рахунку. У файлі
+              <span class="accent">style.css</span> є базовий дизайн сторінки, а
+              в <span class="accent">script.js</span> — коментарі, які
+              допоможуть розбити код на логічні частини.
+            </p>
+
+            <hr />
+
+            <!-- 3 -->
+            <h3>Крок 1. Створення ігрового поля</h3>
+
+            <p>
+              Для початку нам потрібен стіл для нашого віртуального тенісу. У
+              веброзробці для малювання ігор використовується спеціальний тег
+              <span class="accent">&lt;canvas&gt;</span> (полотно).
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 1.1: HTML та CSS</h4>
+              <ol>
+                <li>
+                  У файлі <span class="accent">index.html</span> (після блоку
+                  рахунку) додайте тег полотна. У нього мають бути такі
+                  атрибути: <span class="accent-string">id="canvas"</span>,
+                  <span class="accent-string">width="620"</span> та
+                  <span class="accent-string">height="400"</span>.
+                </li>
+                <li>
+                  У файлі <span class="accent">style.css</span> додайте стилі,
+                  наведені нижче, щоб полотно виглядало як стіл для тенісу
+                  (кольори можете змінити на власні):
+                </li>
+              </ol>
+
+              <pre><code class="language-css">canvas {
+  background-color: cornflowerblue;
+  border: 4px solid navy;
+  border-radius: 3px;
+}</code></pre>
+            </div>
+
+            <p>
+              Тепер переходимо у файл <span class="accent">script.js</span>. Нам
+              потрібно "пояснити" комп'ютеру, де знаходиться наше полотно та
+              дізнатися його розміри, щоб м'яч не вилітав за його край.
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 1.2: JavaScript</h4>
               <p>
-                Перевіримо, чи коректно працює налаштований контекст та наша
-                функція. Додай цей рядок внизу скрипта:
+                У розділі <strong>"1. НАЛАШТУВАННЯ"</strong> напишіть код за
+                такими кроками:
               </p>
-              <pre><code class="language-javascript">drawCircle(width / 2, height / 2, 50, true, "red");</code></pre>
+              <ol>
+                <li>
+                  Створіть константу
+                  <span class="accent">canvas</span> та знайдіть полотно за
+                  допомогою
+                  <span class="accent-string"
+                    >document.querySelector("#canvas")</span
+                  >.
+                </li>
+                <li>
+                  Створіть константу <span class="accent">ctx</span> для
+                  інструментів малювання:
+                  <span class="accent-string">canvas.getContext("2d")</span>.
+                </li>
+                <li>
+                  Збережіть ширину полотна (<span class="accent-string"
+                    >canvas.width</span
+                  >) у константу <span class="accent">gameWidth</span>.
+                </li>
+                <li>
+                  Збережіть висоту (<span class="accent-string"
+                    >canvas.height</span
+                  >) у константу <span class="accent">gameHeight</span>.
+                </li>
+              </ol>
+            </div>
+
+            <hr />
+
+            <!-- 4 -->
+            <h3>Крок 2. Змінні для рахунку</h3>
+
+            <p>
+              Залишаючись у розділі налаштувань (JS), давайте створимо змінні,
+              які будуть запам'ятовувати, скільки балів мають гравці. Оскільки
+              рахунок під час гри буде постійно змінюватися, ми використовуємо
+              ключове слово <span class="accent">let</span>.
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 2: Логіка</h4>
+              <p>Знайдіть у JS-файлі коментар:</p>
+              <pre><code class="language-javascript nocopy">// 🔸 Рахунок гравців</code></pre>
+
               <p>
-                Після запуску коду ти маєш побачити червоне коло рівно по центру
-                полотна. Якщо все працює успішно,
-                <strong>цей тестовий рядок можна видалити</strong>.
+                Скопіюйте і додайте під тим коментарем вже написаний код для
+                рахунку першого гравця, а потім
+                <span class="accent"
+                  >самі напишіть такий код для другого гравця</span
+                >:
               </p>
-            </section>
+
+              <pre><code class="language-javascript">// 1-й гравець:
+const score1Element = document.querySelector("#s1");
+let score1 = 0;
+
+// 2-й гравець:
+// 🔹 допишіть свій код тут 🔹</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <img
+              src="./images/pong-step1.png"
+              alt="Очікуваний результат: порожнє ігрове поле"
+            />
           </div>
         </details>
       </section>
+
+      <!-- 🧩 ЧАСТИНА 2 -->
 
       <section id="part-2" class="accordion tab-content">
-        <details class="accordion__item" name="section2" open>
+        <!-- 📚 Крок 2.1 -->
+        <details class="accordion__item" name="section2">
           <summary class="accordion__header">
-            <div>
-              <span class="star">✧</span> Крок 2:
-              <span class="accent">Створення Класу Ball</span>
-            </div>
+            <h2>
+              <span class="star">✧</span> Частина 2.1:
+              <span class="accent">Обʼєкти</span>
+            </h2>
             <span class="acc-arrow">▶</span>
           </summary>
 
           <div class="accordion__content">
-            <h3>Основи роботи з класами</h3>
-            <p>
-              У програмуванні <strong>Клас (Class)</strong> — це креслення або
-              загальне правило для створення об'єктів. Щоб не прописувати
-              властивості кожного м'яча окремо, ми описуємо їх лише один раз у
-              класі, а браузер потім зможе створити за цим правилом скільки
-              завгодно м'ячів.
-            </p>
-            <p>
-              Усередині класу є спеціальний блок —
-              <span class="accent">constructor()</span>. Це своєрідні стартові
-              налаштування. Він запускається автоматично щоразу, коли ми
-              створюємо новий об'єкт, і одразу видає йому початкові
-              характеристики: стартові координати, базову швидкість, розмір та
-              колір.
-            </p>
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Створити "акторів" для гри.</p>
 
-            <pre><code class="language-javascript">class Ball {
-  constructor() {
-    this.x = width / 2;   // Позиція по горизонталі
-    this.y = height / 2;  // Позиція по вертикалі
-    this.xSpeed = 5;      // Вектор швидкості по осі X
-    this.ySpeed = 0;      // Вектор швидкості по осі Y
-    this.radius = 10;     // Радіус об'єкта
-    this.color = "black"; // Колір заливки
-    this.speed = 5;       // Базовий модуль швидкості
-  }
-
-  // Метод для відображення об'єкта на полотні
-  draw() {
-    drawCircle(this.x, this.y, this.radius, true, this.color);
-  }
-}</code></pre>
-
-            <section class="soft-callout">
-              <h4>🧪 Проміжне тестування</h4>
-              <p>
-                Щоб створити реальний об'єкт за шаблоном, потрібно використати
-                ключове слово <span class="accent">new</span>. Напиши під
-                закриваючою дужкою класу:
-              </p>
-              <pre><code class="language-javascript">const ball = new Ball(); // Створюємо екземпляр класу
-ball.draw();             // Викликаємо метод малювання</code></pre>
-              <p>
-                На екрані має з'явитися чорний об'єкт. Це означає, що клас
-                працює коректно.
-              </p>
-            </section>
+            <ol>
+              <li>
+                <span class="accent">Ракетки.</span> Створення обʼєктів для
+                ракеток (<span class="accent-string">paddle1</span>,
+                <span class="accent-string">paddle2</span>) для збереження їхніх
+                координат, розмірів, швидкостей та кольорів.
+              </li>
+              <li>
+                <span class="accent">Мʼяч.</span> Створення обʼєкта для мʼяча
+                (<span class="accent-string">ball</span>) для збереження його
+                координат, радіуса, кольору та швидкостей руху по осях X та Y.
+              </li>
+            </ol>
 
             <hr />
 
-            <h3>Логіка руху та перевірка зіткнень</h3>
-
-            <p class="soft-callout">
-              <strong>Важливо:</strong> наступний метод потрібно додати
-              <strong>всередину</strong> класу <span class="accent">Ball</span>,
-              одразу після методу <span class="accent">draw()</span>.
-            </p>
+            <!-- 2 -->
+            <h3>Крок 3. Створення ракеток</h3>
 
             <p>
-              Метод <span class="accent">move()</span> відповідає за рух
-              об'єкта, постійно змінюючи його координати. Також він стежить, щоб
-              об'єкт не вилетів за межі екрана: якщо м'яч торкається краю
-              полотна, ми змінюємо його швидкість на протилежну (наприклад, з 5
-              на -5). Завдяки цьому математичному трюку м'яч "відбивається" від
-              стінки і починає летіти в інший бік.
+              Щоб наші "актори" з'явилися у грі, потрібно описати їхні
+              характеристики: де вони знаходяться (координати
+              <span class="accent">x</span> та <span class="accent">y</span>),
+              який у них розмір, швидкість та колір. Для цього в JavaScript
+              зазвичай використовують об'єкти.
             </p>
 
-            <pre><code class="language-javascript">  move() {
-    // Оновлюємо координати
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
+            <div class="soft-callout">
+              <h4>🧩 Завдання 3</h4>
 
-    // Перевірка зіткнення по осі X (ліва та права стінки)
-    if (this.x - this.radius < 0 || this.x + this.radius > width) {
-      this.xSpeed = -this.xSpeed;
-    }
+              <p>Знайдіть у JS-файлі коментарі:</p>
+              <pre><code class="language-javascript nocopy">// 🔸 Ракетка 1 (ліва)
 
-    // Перевірка зіткнення по осі Y (верхня та нижня стінки)
-    if (this.y - this.radius < 0 || this.y + this.radius > height) {
-      this.ySpeed = -this.ySpeed;
-    }
-  }</code></pre>
-          </div>
-        </details>
-      </section>
+// 🔸 Ракетка 2 (права)</code></pre>
 
-      <section id="part-3" class="accordion tab-content">
-        <details class="accordion__item" name="section3" open>
-          <summary class="accordion__header">
-            <div>
-              <span class="star">✧</span> Крок 3:
-              <span class="accent">Методи керування об'єктом</span>
-            </div>
-            <span class="acc-arrow">▶</span>
-          </summary>
-
-          <div class="accordion__content">
-            <p class="soft-callout">
-              Ці методи дозволяють нам віддавати команди об'єкту. Розміщуємо їх
-              <strong>всередині</strong> класу <span class="accent">Ball</span>.
-            </p>
-
-            <h3>Керування напрямком</h3>
-            <p>
-              Метод <span class="accent">setDirection()</span> отримує команду —
-              слово, яке вказує напрямок руху (наприклад, "up" або "right"). Щоб
-              м'яч рухався чітко прямо і не летів по діагоналі, ми повинні
-              правильно розподілити його швидкість. Тобто, якщо ми наказуємо
-              м'ячу рухатись вгору, ми повністю зупиняємо його рух вліво чи
-              вправо (ставимо <span class="accent">xSpeed</span> на 0), і
-              направляємо всю його базову швидкість лише на рух вгору (у змінну
-              <span class="accent">ySpeed</span>).
-            </p>
-
-            <pre><code class="language-javascript">  setDirection(direction) {
-    if (direction === "up") {
-      this.xSpeed = 0;              
-      this.ySpeed = -this.speed;    // Рух вгору (з мінусом)
-    } else if (direction === "down") {
-      this.xSpeed = 0;
-      this.ySpeed = this.speed;     // Рух вниз (додатній)
-    } else if (direction === "left") {
-      this.xSpeed = -this.speed;    // Рух вліво (з мінусом)
-      this.ySpeed = 0;
-    } else if (direction === "right") {
-      this.xSpeed = this.speed;     // Рух вправо (додатній)
-      this.ySpeed = 0;
-    } else if (direction === "stop") {
-      this.xSpeed = 0;              // Повна зупинка
-      this.ySpeed = 0;
-    }
-  }</code></pre>
-
-            <hr />
-
-            <h3>Зміна розміру та швидкості</h3>
-            <p>
-              Ці методи дозволяють змінювати властивості м'яча прямо під час
-              гри. Ми використовуємо перевірку <span class="accent">if</span>,
-              щоб м'яч не став занадто малим і не зник з екрана, а також щоб він
-              не міг повністю зупинитися або почати рухатися у зворотному
-              напрямку без команди.
-            </p>
-
-            <pre><code class="language-javascript">  changeSize(change) {
-    // Додаємо передане значення change до поточного радіуса м'яча.
-    // Якщо параметр change додатний (наприклад, 1), радіус збільшиться.
-    // Якщо параметр change від'ємний (наприклад, -1), радіус зменшиться.
-    this.radius += change; 
-
-    // Захисна перевірка: щоб м'яч візуально не зник з екрана.
-    // Якщо після обчислень радіус виявився меншим за 5 пікселів, 
-    // ми примусово встановлюємо його на рівні 5.
-    if (this.radius < 5) {
-      this.radius = 5; 
-    }
-  }</code></pre>
-
-            <pre><code class="language-javascript">changeSpeed(change) {
-    this.speed += change;
-    // Швидкість не може бути меншою за 1
-    if (this.speed < 1) {
-      this.speed = 1; 
-    }
-
-    // Оновлюємо поточну швидкість м'яча, щоб він одразу прискорився або сповільнився.
-    
-    // Перевіряємо горизонталь (вісь X): чи м'яч взагалі рухається вбік?
-    if (this.xSpeed !== 0) {
-      // Якщо швидкість більша за нуль, значить він летить вправо
-      if (this.xSpeed > 0) {
-        this.xSpeed = this.speed;  // Даємо нову швидкість (додатне число)
-      } else {
-        this.xSpeed = -this.speed; // Інакше він летить вліво (робимо число від'ємним)
-      }
-    }
-
-    // Перевіряємо вертикаль (вісь Y): чи м'яч рухається вгору або вниз?
-    if (this.ySpeed !== 0) {
-      // Якщо швидкість більша за нуль, значить він летить вниз
-      if (this.ySpeed > 0) {
-        this.ySpeed = this.speed;  // Даємо нову швидкість (додатне число)
-      } else {
-        this.ySpeed = -this.speed; // Інакше він летить вгору (робимо число від'ємним)
-      }
-    }</code></pre>
-
-            <section class="soft-callout">
-              <h4>🧪 Проміжне тестування</h4>
               <p>
-                Давай перевіримо, чи вміє м'яч виконувати команди. У кінці файлу
-                (після створення об'єкта) додай ці рядки:
+                Скопіюйте у потрібне місце код для першої ракетки, а тоді
+                <span class="accent">самі напишіть такий код для другої</span>:
               </p>
-              <pre><code class="language-javascript">ball.changeSize(20);         // М'яч має стати більшим
-ball.setDirection("right");  // М'яч має підготуватися до руху вправо
-ball.move();                 // Робимо один крок
-ball.draw();                 // Малюємо результат</code></pre>
-              <p>
-                Якщо м'яч на екрані збільшився і змістився вправо — методи
-                працюють правильно.
-                <strong
-                  >Після перевірки ці тестові рядки можна видалити.</strong
-                >
-              </p>
-            </section>
-          </div>
-        </details>
-      </section>
 
-      <section id="part-4" class="accordion tab-content">
-        <details class="accordion__item" name="section4" open>
-          <summary class="accordion__header">
-            <div>
-              <span class="star">✧</span> Крок 4:
-              <span class="accent">Обробка подій та Цикл анімації</span>
-            </div>
-            <span class="acc-arrow">▶</span>
-          </summary>
-
-          <div class="accordion__content">
-            <p class="soft-callout">
-                <strong>Увага:</strong> Весь код цієї частини ми пишемо <strong>після</strong> фігурної дужки, яка закриває клас <span class="accent">Ball</span>. Ми завершили створення "креслення" і тепер переходимо до керування програмою.
-            </p>
-
-            <h3>Словник команд</h3>
-            <p>
-              Створюємо об'єкт (словник), який зіставляє системні назви
-              клавіш з нашими командами управління.
-            </p>
-
-            <pre><code class="language-javascript">const keyActions = {
-  " ": "stop",              // Клавіша Пробіл
-  "ArrowLeft": "left",      // Стрілка вліво
-  "ArrowUp": "up",          // Стрілка вгору
-  "ArrowRight": "right",    // Стрілка вправо
-  "ArrowDown": "down",      // Стрілка вниз
-  "z": "slowDown",          // Літера Z - зменшити швидкість
-  "x": "speedUp",           // Літера X - збільшити швидкість
-  "c": "decreaseSize",      // Літера C - зменшити розмір
-  "v": "increaseSize"       // Літера V - збільшити розмір
+              <pre><code class="language-javascript">const paddle1 = {
+  x: 0,
+  y: 0,
+  width: 25,
+  height: 95,
+  speed: 9,
+  color: "orangered",
 };</code></pre>
 
+              <p>
+                💡 <b>Підказка:</b> Щоб розмістити другу ракетку в нижньому
+                правому кутку полотна, треба від ширини полотна (<span
+                  class="accent-string"
+                  >gameWidth</span
+                >) відняти ширину самої ракетки (25) для координати
+                <span class="accent">x</span>, і те саме, але з висотою, зробити
+                для координати <span class="accent">y</span>.
+              </p>
+            </div>
+
             <hr />
 
-            <h3>Обробник події "keydown"</h3>
+            <!-- 3 -->
+            <h3>Крок 4. Створення мʼяча</h3>
+
             <p>
-              Метод <span class="accent">addEventListener</span> прослуховує
-              натискання клавіш. Отримавши
-              <span class="accent">event.key</span>, ми знаходимо дію у словнику
-              та викликаємо необхідний метод.
+              Тепер нам потрібен м'яч. Оскільки він круглий, замість ширини та
+              висоти ми задамо йому радіус. Також м'ячу потрібна швидкість. Щоб
+              він міг літати по діагоналі та правильно відбиватися від стін, ми
+              задаємо йому дві окремі швидкості:
+              <span class="accent">velocityX</span> (швидкість і напрямок руху
+              по горизонталі) та <span class="accent">velocityY</span> (по
+              вертикалі).
             </p>
 
-            <pre><code class="language-javascript">// Слухаємо натискання клавіш по всьому документу
-document.addEventListener("keydown", (event) => {
-  
-  // Створюємо змінну, де будемо зберігати назву клавіші
-  let key;
+            <div class="soft-callout">
+              <h4>🧩 Завдання 4</h4>
 
-  // Перевіряємо довжину назви клавіші. 
-  // У звичайних літер та цифр довжина назви дорівнює 1 (наприклад, "z", "x", "1").
-  // У системних клавіш назва довга (наприклад, "ArrowUp", "Shift", "Escape").
-  if (event.key.length === 1) {
-    // Якщо це одиночний символ (літера), робимо його маленьким.
-    // Це потрібно для того, щоб програма впізнала клавішу навіть при CapsLock.
-    key = event.key.toLowerCase();
-  } else {
-    // Якщо це системна клавіша (наприклад, стрілка), залишаємо назву як є.
-    key = event.key;
-  }
-  
-  // Шукаємо отриману назву клавіші в нашому "словнику" команд
-  const action = keyActions[key];
-  
-  // Якщо такої клавіші в словнику немає — нічого не робимо (виходимо з функції)
-  if (!action) {
-    return; 
-  }
+              <p>Знайдіть у JS-файлі коментар:</p>
+              <pre><code class="language-javascript nocopy">// 🔸 М'яч</code></pre>
 
-  // Перевіряємо, яку саме дію знайдено, і передаємо наказ м'ячу
-  if (action === "slowDown") {
-    ball.changeSpeed(-1); // Сповільнюємо
-  } else if (action === "speedUp") {
-    ball.changeSpeed(1);  // Прискорюємо
-  } else if (action === "decreaseSize") {
-    ball.changeSize(-1);  // Зменшуємо
-  } else if (action === "increaseSize") {
-    ball.changeSize(1);   // Збільшуємо
-  } else {
-    // Якщо це команда напрямку ("up", "down", "left", "right" або "stop")
-    ball.setDirection(action); 
-  }
+              <p>
+                Скопіюйте код для м'яча, але
+                <span class="accent"
+                  >замість знаків питання ❓ напишіть математичну дію</span
+                >, щоб м'яч з'явився рівно по центру ігрового поля.
+              </p>
+
+              <pre><code class="language-javascript">const ball = {
+  x: ❓, // 🔹 напишіть математичну дію тут
+  y: ❓, // 🔹 напишіть математичну дію тут
+  radius: 10,
+  color: "darkblue",
+  velocityX: 5,
+  velocityY: 5,
+};</code></pre>
+
+              <p>
+                💡 <b>Підказка:</b> Центр — це половина ширини (<span
+                  class="accent-string"
+                  >gameWidth</span
+                >) та половина висоти (<span class="accent-string"
+                  >gameHeight</span
+                >).
+              </p>
+            </div>
+          </div>
+        </details>
+
+        <!-- 📚 Крок 2.2 -->
+        <details class="accordion__item" name="section2">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 2.2:
+              <span class="accent">Малювання</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>
+              Навчити браузер малювати наше ігрове поле та "акторів" на ньому.
+            </p>
+
+            <ol>
+              <li>
+                <span class="accent">Лінія (сітка).</span> Намалювати роздільну
+                лінію по центру, щоб поле було схоже на стіл для тенісу.
+              </li>
+              <li>
+                <span class="accent">Ракетки.</span> Намалювати два прямокутники
+                за допомогою інструменту
+                <span class="accent-string">fillRect(...)</span>.
+              </li>
+              <li>
+                <span class="accent">Мʼяч.</span> Намалювати коло по центру
+                полотна за допомогою інструменту
+                <span class="accent-string">arc(...)</span>.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- 2 -->
+            <h3>Крок 5. Створення функції малювання</h3>
+
+            <p>
+              Всі команди для малювання ми зберемо в одну "коробку" — спеціальну
+              функцію. Ми будемо використовувати наш "віртуальний пензлик", який
+              раніше зберегли у змінну
+              <span class="accent">ctx</span>.
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 5</h4>
+
+              <p>
+                Знайдіть у JS-файлі розділ
+                <strong>"4. МАЛЮВАННЯ ТА АНІМАЦІЯ"</strong> та коментар:
+              </p>
+
+              <pre><code class="language-javascript nocopy">// 🔸 Функція drawGame: Малюємо гру</code></pre>
+
+              <p>
+                Під цим коментарем
+                <span class="accent">створіть порожню функцію</span> з назвою
+                <span class="accent">drawGame</span>. Далі всередині цієї
+                функції ми будемо додавати код крок за кроком.
+              </p>
+
+              <p>
+                Спочатку додайте команди, які готують наше "полотно": стирають
+                попередній кадр (щоб картинка не розмазувалася під час руху
+                обʼєктів) та малюють центральну лінію-сітку. Цю частину можете
+                просто скопіювати:
+              </p>
+
+              <pre><code class="language-javascript">// 1. Очищаємо полотно перед малюванням нового кадру 
+ctx.clearRect(0, 0, gameWidth, gameHeight);
+
+// 2. Малюємо білу лінію по центру 
+ctx.strokeStyle = "#f9f1e6";
+ctx.lineWidth = 3;
+ctx.beginPath();
+ctx.moveTo(gameWidth / 2, 0);
+ctx.lineTo(gameWidth / 2, gameHeight);
+ctx.stroke();</code></pre>
+
+              <p>
+                Тепер намалюємо ракетки. Інструмент
+                <span class="accent">fillRect</span> малює прямокутник і завжди
+                просить 4 значення в такому порядку: координати x та y
+                (верхнього лівого кута), ширину та висоту.
+                <span
+                  >Замініть знаки питання ❓ на правильні властивості
+                  об'єкта</span
+                >
+                <span class="accent">paddle1</span> для малювання лівої ракетки,
+                а тоді самостійно напишіть код для правої ракетки:
+              </p>
+
+              <pre><code class="language-javascript">// 3. Малюємо ліву ракетку
+ctx.fillStyle = ❓; // 🔹 колір фону ракетки 1
+ctx.fillRect(❓, ❓, ❓, ❓); // 🔹 x, y, ширина та висота ракетки 1
+
+// 4. Малюємо праву ракетку
+// 🔹 допишіть свій код тут 🔹</code></pre>
+
+              <p>
+                Наостанок малюємо м'яч. Оскільки це коло, ми використовуємо
+                команду <span class="accent">arc</span>. Вона просить координати
+                центру кола (x, y) та радіус. Кути для малювання ідеального кола
+                (0 та Math.PI * 2) вже задані:
+              </p>
+
+              <pre><code class="language-javascript">// 5. Малюємо м'яч
+ctx.fillStyle = ❓; // 🔹 колір фону мʼяча
+ctx.beginPath();
+ctx.arc(❓, ❓, ❓, 0, Math.PI * 2); // 🔹 x, y, радіус
+ctx.fill();</code></pre>
+            </div>
+
+            <hr />
+
+            <!-- 3 -->
+            <h3>Крок 6. Виклик функції</h3>
+
+            <p>
+              Якщо ви зараз оновите сторінку, то... нічого не зміниться! Це
+              тому, що ми лише <em>створили</em> функцію, але ще не сказали
+              комп'ютеру її виконати.
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 6</h4>
+
+              <p>
+                Спустіться в самий низ вашого файлу до розділу
+                <b>"5. ЗАПУСК ГРИ"</b> та знайдіть коментар:
+              </p>
+              <pre><code class="language-javascript nocopy">// 🔸 Малюємо перший кадр, щоб екран не був порожнім</code></pre>
+
+              <p>
+                Одразу під цим коментарем
+                <span class="accent">викличте вашу нову функцію</span>, щоб
+                браузер нарешті намалював ракетки та м'яч на екрані.
+              </p>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <img
+              src="./images/pong-step2.png"
+              alt="Очікуваний результат: ігрове поле з ракетками, мʼячем та лінією посередині"
+            />
+          </div>
+        </details>
+      </section>
+
+      <!-- 🧩 ЧАСТИНА 3 -->
+
+      <section id="part-3" class="accordion tab-content">
+        <!-- 📚 Крок 3.1 -->
+        <details class="accordion__item" name="section3">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 3.1:
+              <span class="accent">Ракетки</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Змусити ракетки рухатися та реагувати на дії гравця.</p>
+
+            <ol>
+              <li>
+                <span class="accent">Гравець.</span> Навчити гру розуміти
+                натискання клавіш W та S, щоб рухати ліву ракетку вгору і вниз.
+              </li>
+              <li>
+                <span class="accent">Анімація.</span> Створити ігровий цикл,
+                який буде постійно оновлювати картинку на екрані.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- 2 -->
+            <h3>Крок 7. Відстеження клавіатури</h3>
+
+            <p>
+              Щоб керувати ракеткою, нам треба знати, чи тримає гравець
+              натиснутою кнопку (клавішу W або S). Ми створимо об'єкт
+              <span class="accent">keys</span>, який буде працювати як
+              перемикач: кнопка натиснута —
+              <span class="accent-string">true</span>, відпущена —
+              <span class="accent-string">false</span>.
+            </p>
+            <p>
+              Ми використовуємо <span class="accent">event.code</span> замість
+              звичайних літер (<span class="accent">event.key</span>). Цей
+              підхід дозволяє грі розуміти, яку саме <em>фізичну</em> кнопку ви
+              натиснули, навіть якщо у вас увімкнена українська розкладка
+              клавіатури.
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 7</h4>
+
+              <p>
+                Знайдіть у JS-файлі розділ <strong>"2. КЕРУВАННЯ"</strong> та
+                коментар:
+              </p>
+              <pre><code class="language-javascript nocopy">// 🔸 Слідкуємо за тим, які клавіші натиснуті</code></pre>
+
+              <p>
+                Скопіюйте цей код під знайдений коментар. Для події відпускання
+                клавіші (<span class="accent-string">keyup</span>) вам потрібно
+                <span class="accent">самостійно дописати рядок коду</span> за
+                аналогією з натисканням, але змінити стан перемикача на
+                <span class="accent-string">false</span>:
+              </p>
+
+              <pre><code class="language-javascript">// Створюємо "перемикачі" для клавіш (спочатку вони не натиснуті)
+const keys = {
+  KeyW: false,
+  KeyS: false,
+};
+
+// Коли клавіша НАТИСНУТА, вмикаємо перемикач (true)
+window.addEventListener("keydown", (event) => {
+  if (event.code in keys) keys[event.code] = true;
+});
+
+// Коли клавіша ВІДПУЩЕНА, вимикаємо перемикач (false)
+window.addEventListener("keyup", (event) => {
+  // 🔹 допишіть свій код тут 🔹
 });</code></pre>
+            </div>
 
             <hr />
 
-            <h3>Реалізація анімаційного циклу</h3>
+            <!-- 3 -->
+            <h3>Крок 8. Рух ракетки гравця</h3>
+
             <p>
-              Анімація створюється шляхом безперервного перемальовування
-              полотна. Стандартом для цього є функція
-              <span class="accent">requestAnimationFrame</span>.
+              Координати ракеток змінюватимуться у функції
+              <span class="accent">movePaddles</span> (з англ. "рухати
+              ракетки"). Ми хочемо, щоб ракетка рухалася лише тоді, коли
+              натиснута відповідна клавіша (W або S). При цьому дуже важливо,
+              щоб ракетка не могла вийти за межі полотна. Для цього ми спершу
+              перевіряємо, <b>чи є ще місце</b> для руху:
+            </p>
+            <ul>
+              <li>
+                Для руху вгору ми перевіряємо, чи координата
+                <span class="accent">y</span> ракетки більша за 0 (<span
+                  class="accent-string"
+                  >y > 0</span
+                >).
+              </li>
+              <li>
+                Для руху вниз ми перевіряємо, чи нижній край ракетки не
+                торкнувся "підлоги" (<span class="accent-string"
+                  >y &lt; gameHeight - paddle1.height</span
+                >).
+              </li>
+              <li>
+                Координату <span class="accent">x</span> перевіряти не потрібно,
+                бо ракетка рухається лише вгору та вниз.
+              </li>
+            </ul>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 8</h4>
+
+              <p>
+                Знайдіть у JS-файлі розділ <strong>"3. ЛОГІКА ГРИ"</strong> та
+                коментар:
+              </p>
+              <pre><code class="language-javascript nocopy">// 🔸 Функція movePaddles: Рухаємо ракетки, але не даємо їм вийти за межі полотна</code></pre>
+
+              <p>
+                Під ним додайте код для створення функції, яка рахуватиме нові
+                координати ракетки. Логіка для перевірки меж та для руху вгору
+                (<span class="accent">KeyW</span>) вже написана. Напишіть за
+                аналогією останній рядок для руху вниз (<span class="accent"
+                  >KeyS</span
+                >):
+              </p>
+
+              <pre><code class="language-javascript">function movePaddles() {
+  // --- ЛЮДИНА (Ракетка 1) ---
+  
+  // 1. Перевіряємо, чи є куди рухатися
+  const p1CanMoveUp = paddle1.y > 0; 
+  const p1CanMoveDown = paddle1.y < gameHeight - paddle1.height; 
+  
+  // 2. Якщо клавіша натиснута ТА є місце -> рухаємо ракетку
+  if (keys.KeyW && p1CanMoveUp) paddle1.y -= paddle1.speed;
+  // 🔹 допишіть свій код для руху вниз тут 🔹
+}</code></pre>
+            </div>
+
+            <hr />
+
+            <!-- 4 -->
+            <h3>Крок 9. Анімація</h3>
+
+            <p>
+              А щоб ми *бачили* цей рух, нам потрібен <b>ігровий цикл</b> —
+              функція <span class="accent">update</span>. Вона буде: змінювати
+              координати ➔ малювати новий кадр ➔ просити браузер повторити це
+              знову і знову (за допомогою
+              <span class="accent-string">requestAnimationFrame</span>).
             </p>
 
-            <pre><code class="language-javascript">function animate() {
-  // 1. Очищення полотна від попереднього кадру
-  ctx.clearRect(0, 0, width, height);
+            <div class="soft-callout">
+              <h4>🧩 Завдання 9</h4>
 
-  // 2. Відображення об'єкта
-  ball.draw();
-  
-  // 3. Перерахунок координат для наступного кадру
-  ball.move();
+              <p>Тепер знайдіть коментар:</p>
+              <pre><code class="language-javascript nocopy">// 🔸 Функція update: Головний цикл гри</code></pre>
 
-  // 4. Відображення зовнішньої рамки
-  ctx.strokeRect(0, 0, width, height);
+              <p>
+                Створіть під ним функцію <span class="accent">update</span> та
+                запустіть її. <br />
+                ⚡️ <b>Важливо:</b> Знайдіть свій старий виклик
+                <span class="accent-string">drawGame()</span> у самому низу
+                файлу (з Кроку 6) і
+                <span class="accent-string">закоментуйте його</span>!
+              </p>
 
-  // 5. Запит на виклик цієї ж функції для наступного кадру
-  requestAnimationFrame(animate); 
+              <pre><code class="language-javascript">function update() {
+  // Рухаємо об'єкти
+  // 🔹 Викличте функцію movePaddles 🔹
+
+  // Малюємо новий кадр
+  // 🔹 Викличте функцію drawGame 🔹
+
+  // 3. Повторюємо цикл нескінченно
+  requestAnimationFrame(update);
 }
 
-// Запуск анімації
-animate();</code></pre>
+// 🔹 Викличте функцію update 🔹</code></pre>
+            </div>
 
-            <section class="soft-callout">
-              <h4>🏁 Фінальне тестування</h4>
-              <p>
-                Тепер об'єкт має плавно переміщуватись. Використовуй стрілки для
-                зміни напрямку, Z/X для швидкості та C/V для розміру. Пробіл
-                зупинить рух.
-              </p>
-            </section>
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <p>
+              Ліва ракетка має миттєво реагувати на натискання клавіш
+              <b>W</b> та <b>S</b> (або <b>Ц</b> та <b>І</b>), і не виїжджати за
+              межі поля. М'яч та ракетка комп'ютера поки що стоять на місці.
+            </p>
+
+            <!-- <img
+              src="./images/pong-step3.png"
+              alt="Очікуваний результат: ліва ракетка може рухатися вгору та вниз"
+            /> -->
+          </div>
+        </details>
+
+        <!-- 📚 Крок 3.2 -->
+        <details class="accordion__item" name="section3">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 3.2:
+              <span class="accent">Мʼяч та AI</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>...</p>
+
+            <ol>
+              <li>...</li>
+            </ol>
+
+            <hr />
+
+            <!-- x -->
+            <h3>Крок X. ...</h3>
+
+            <p>...</p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання x: ...</h4>
+              <p>...</p>
+
+              <pre><code class="language-javascript">// 🔸 ...</code></pre>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- 🧩 ЧАСТИНА 4-->
+
+      <section id="part-4" class="accordion tab-content">
+        <!-- 📚 Крок 4.1 -->
+        <details class="accordion__item" name="section4">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 4.1:
+              <span class="accent">Зіткнення</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Створити "сцену" для гри та підключити її до JavaScript.</p>
+
+            <ol>
+              <li>
+                <span class="accent">HTML/CSS.</span> Створення розмітки
+                сторінки: заголовок, блок для рахунку та саме ігрове поле
+                (canvas). Стилізація цих елементів для гарного вигляду.
+              </li>
+              <li>
+                <span class="accent">JS Налаштування.</span> Отримання доступу
+                до полотна та до інструментів для малювання (<span
+                  class="accent-string"
+                  >canvas.getContext("2d")</span
+                >), збереження розмірів полотна. Створення базових змінних для
+                рахунку (<span class="accent-string">score1</span>,
+                <span class="accent-string">score2</span>) та прив'язка
+                HTML-елементів до JS.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- x -->
+            <h3>Крок X. ...</h3>
+
+            <p>...</p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання x: ...</h4>
+              <p>...</p>
+
+              <pre><code class="language-javascript">// 🔸 ...</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <img
+              src="./images/pong-step2.png"
+              alt="Очікуваний результат: ігрове поле з ракетками, мʼячем та лінією"
+            />
+          </div>
+        </details>
+
+        <!-- 📚 Крок 4.2 -->
+        <details class="accordion__item" name="section4">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 4.2:
+              <span class="accent">Гол</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Створити "сцену" для гри та підключити її до JavaScript.</p>
+
+            <ol>
+              <li>
+                <span class="accent">HTML/CSS.</span> Створення розмітки
+                сторінки: заголовок, блок для рахунку та саме ігрове поле
+                (canvas). Стилізація цих елементів для гарного вигляду.
+              </li>
+              <li>
+                <span class="accent">JS Налаштування.</span> Отримання доступу
+                до полотна та до інструментів для малювання (<span
+                  class="accent-string"
+                  >canvas.getContext("2d")</span
+                >), збереження розмірів полотна. Створення базових змінних для
+                рахунку (<span class="accent-string">score1</span>,
+                <span class="accent-string">score2</span>) та прив'язка
+                HTML-елементів до JS.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- x -->
+            <h3>Крок X. ...</h3>
+
+            <p>...</p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання x: ...</h4>
+              <p>...</p>
+
+              <pre><code class="language-javascript">// 🔸 ...</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <img
+              src="./images/pong-step3.png"
+              alt="Очікуваний результат: ігрове поле з ракетками, мʼячем та лінією"
+            />
+          </div>
+        </details>
+      </section>
+
+      <!-- 🧩 ЧАСТИНА 5 -->
+
+      <section id="part-5" class="accordion tab-content">
+        <!-- 📚 Крок 5.1 -->
+        <details class="accordion__item" name="section5">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 5.1:
+              <span class="accent">Зручність</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Створити "сцену" для гри та підключити її до JavaScript.</p>
+
+            <ol>
+              <li>
+                <span class="accent">HTML/CSS.</span> Створення розмітки
+                сторінки: заголовок, блок для рахунку та саме ігрове поле
+                (canvas). Стилізація цих елементів для гарного вигляду.
+              </li>
+              <li>
+                <span class="accent">JS Налаштування.</span> Отримання доступу
+                до полотна та до інструментів для малювання (<span
+                  class="accent-string"
+                  >canvas.getContext("2d")</span
+                >), збереження розмірів полотна. Створення базових змінних для
+                рахунку (<span class="accent-string">score1</span>,
+                <span class="accent-string">score2</span>) та прив'язка
+                HTML-елементів до JS.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- x -->
+            <h3>Крок X. ...</h3>
+
+            <p>...</p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання x: ...</h4>
+              <p>...</p>
+
+              <pre><code class="language-javascript">// 🔸 ...</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <img
+              src="./images/pong-step2.png"
+              alt="Очікуваний результат: ігрове поле з ракетками, мʼячем та лінією"
+            />
+          </div>
+        </details>
+
+        <!-- 📚 Крок 5.2 -->
+        <details class="accordion__item" name="section5">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 5.2:
+              <span class="accent">Цікавість</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3>Мета</h3>
+            <p>Створити "сцену" для гри та підключити її до JavaScript.</p>
+
+            <ol>
+              <li>
+                <span class="accent">HTML/CSS.</span> Створення розмітки
+                сторінки: заголовок, блок для рахунку та саме ігрове поле
+                (canvas). Стилізація цих елементів для гарного вигляду.
+              </li>
+              <li>
+                <span class="accent">JS Налаштування.</span> Отримання доступу
+                до полотна та до інструментів для малювання (<span
+                  class="accent-string"
+                  >canvas.getContext("2d")</span
+                >), збереження розмірів полотна. Створення базових змінних для
+                рахунку (<span class="accent-string">score1</span>,
+                <span class="accent-string">score2</span>) та прив'язка
+                HTML-елементів до JS.
+              </li>
+            </ol>
+
+            <hr />
+
+            <!-- x -->
+            <h3>Крок X. ...</h3>
+
+            <p>...</p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання x: ...</h4>
+              <p>...</p>
+
+              <pre><code class="language-javascript">// 🔸 ...</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+
+            <img
+              src="./images/pong-step3.png"
+              alt="Очікуваний результат: ігрове поле з ракетками, мʼячем та лінією"
+            />
           </div>
         </details>
       </section>
@@ -577,6 +1251,7 @@ animate();</code></pre>
       <p>© 2026 WebUniverse — Усі права захищені.</p>
     </footer>
 
+    <!-- Кнопка для повернення на початок сторінки -->
     <button
       id="scrollToTopBtn"
       class="scroll-to-top"
