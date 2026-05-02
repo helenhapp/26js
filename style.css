@@ -991,6 +991,7 @@ details.task[open] summary::before {
   border-radius: 6px;
   line-height: 1.6;
   margin: 20px 0;
+  border: 1px solid var(--accordion-border);
 }
 .soft-callout h4 {
   margin: 0;
