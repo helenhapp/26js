@@ -460,7 +460,7 @@
             <div class="soft-callout">
               <h4>🧩 Завдання 2: Логіка</h4>
               <p>Знайдіть у JS-файлі коментар:</p>
-              <pre><code class="language-javascript nocopy">// 🔸 Рахунок гравців</code></pre>
+              <pre><code class="language-javascript ">// 🔸 Рахунок гравців</code></pre>
 
               <p>
                 Скопіюйте і додайте під тим коментарем вже написаний код для
@@ -539,13 +539,16 @@ let score1 = 0;
               <h4>🧩 Завдання 3</h4>
 
               <p>Знайдіть у JS-файлі коментарі:</p>
-              <pre><code class="language-javascript nocopy">// 🔸 Ракетка 1 (ліва)
+              <pre><code class="language-javascript ">// 🔸 Ракетка 1 (ліва)
 
 // 🔸 Ракетка 2 (права)</code></pre>
 
               <p>
                 Скопіюйте у потрібне місце код для першої ракетки, а тоді
-                <span class="accent">самі напишіть такий код для другої ракетки (змінивши її швидкість на 5)</span>:
+                <span class="accent"
+                  >самі напишіть такий код для другої ракетки (змінивши її
+                  швидкість на 5)</span
+                >:
               </p>
 
               <pre><code class="language-javascript">const paddle1 = {
@@ -587,7 +590,7 @@ let score1 = 0;
               <h4>🧩 Завдання 4</h4>
 
               <p>Знайдіть у JS-файлі коментар:</p>
-              <pre><code class="language-javascript nocopy">// 🔸 М'яч</code></pre>
+              <pre><code class="language-javascript ">// 🔸 М'яч</code></pre>
 
               <p>
                 Скопіюйте код для м'яча, але
@@ -671,7 +674,7 @@ let score1 = 0;
                 <strong>"4. МАЛЮВАННЯ ТА АНІМАЦІЯ"</strong> та коментар:
               </p>
 
-              <pre><code class="language-javascript nocopy">// 🔸 Функція drawGame: Малюємо гру</code></pre>
+              <pre><code class="language-javascript ">// 🔸 Функція drawGame: Малюємо гру</code></pre>
 
               <p>
                 Під цим коментарем
@@ -750,7 +753,7 @@ ctx.fill();</code></pre>
                 Спустіться в самий низ вашого файлу до розділу
                 <b>"5. ЗАПУСК ГРИ"</b> та знайдіть коментар:
               </p>
-              <pre><code class="language-javascript nocopy">// 🔸 Малюємо перший кадр, щоб екран не був порожнім</code></pre>
+              <pre><code class="language-javascript ">// 🔸 Малюємо перший кадр, щоб екран не був порожнім</code></pre>
 
               <p>
                 Одразу під цим коментарем
@@ -828,7 +831,7 @@ ctx.fill();</code></pre>
                 Знайдіть у JS-файлі розділ <strong>"2. КЕРУВАННЯ"</strong> та
                 коментар:
               </p>
-              <pre><code class="language-javascript nocopy">// 🔸 Слідкуємо за тим, які клавіші натиснуті</code></pre>
+              <pre><code class="language-javascript ">// 🔸 Слідкуємо за тим, які клавіші натиснуті</code></pre>
 
               <p>
                 Скопіюйте цей код під знайдений коментар. Для події відпускання
@@ -895,7 +898,7 @@ window.addEventListener("keyup", (event) => {
                 Знайдіть у JS-файлі розділ <strong>"3. ЛОГІКА ГРИ"</strong> та
                 коментар:
               </p>
-              <pre><code class="language-javascript nocopy">// 🔸 Функція movePaddles: Рухаємо ракетки, але не даємо їм вийти за межі полотна</code></pre>
+              <pre><code class="language-javascript ">// 🔸 Функція movePaddles: Рухаємо ракетки, але не даємо їм вийти за межі полотна</code></pre>
 
               <p>
                 Під ним додайте код для створення функції, яка рахуватиме нові
@@ -936,7 +939,7 @@ window.addEventListener("keyup", (event) => {
               <h4>🧩 Завдання 9</h4>
 
               <p>Тепер знайдіть коментар:</p>
-              <pre><code class="language-javascript nocopy">// 🔸 Функція update: Головний цикл гри</code></pre>
+              <pre><code class="language-javascript ">// 🔸 Функція update: Головний цикл гри</code></pre>
 
               <p>
                 Створіть під ним функцію <span class="accent">update</span> та
@@ -978,7 +981,6 @@ window.addEventListener("keyup", (event) => {
           </div>
         </details>
 
-     
         <!-- 📚 Крок 3.2 -->
         <details class="accordion__item" name="section3">
           <summary class="accordion__header">
@@ -1030,7 +1032,7 @@ window.addEventListener("keyup", (event) => {
               <h4>🧩 Завдання 10</h4>
 
               <p>Знайдіть у JS-файлі коментарі:</p>
-              <pre><code class="language-javascript nocopy">// 🔸 Функція moveBall: Рухаємо мʼяч
+              <pre><code class="language-javascript ">// 🔸 Функція moveBall: Рухаємо мʼяч
 
 // 🔸 Функція checkWallBounces: Відбивання від стелі та підлоги</code></pre>
 
@@ -1047,7 +1049,7 @@ window.addEventListener("keyup", (event) => {
   // 🔹 допишіть код для координати "y" тут 🔹
 }</code></pre>
 
- <pre><code class="language-javascript">function checkWallBounces() {
+              <pre><code class="language-javascript">function checkWallBounces() {
   const hitTop = ball.y - ball.radius &lt; 0; // Чи торкнувся стелі
   const hitBottom = ❓; // 🔹 чи координата y + радіус більша за gameHeight?
 
