@@ -36,7 +36,7 @@ const paddle2 = {
   y: gameHeight - 95,
   width: 25,
   height: 95,
-  speed: 9,
+  speed: 5,
   color: "limegreen",
 };
 
@@ -85,12 +85,38 @@ function movePaddles() {
 
   // 2. Якщо клавіша натиснута ТА є місце -> рухаємо ракетку
   if (keys.KeyW && p1CanMoveUp) paddle1.y -= paddle1.speed;
-  else if (keys.KeyS && p1CanMoveDown) paddle1.y += paddle1.speed;
+  if (keys.KeyS && p1CanMoveDown) paddle1.y += paddle1.speed;
+
+  // --- КОМП'ЮТЕР (Ракетка 2) ---
+  // 1. Перевіряємо, чи є місце для руху
+  const p2CanMoveUp = paddle2.y > 0;
+  const p2CanMoveDown = paddle2.y < gameHeight - paddle2.height;
+
+  // 2. Шукаємо центр ракетки комп'ютера
+  const p2Center = paddle2.y + paddle2.height / 2;
+
+  // 3. Рухаємо ракетку за м'ячем
+  if (ball.y < p2Center && p2CanMoveUp) paddle2.y -= paddle2.speed;
+  else if (ball.y > p2Center && p2CanMoveDown) paddle2.y += paddle2.speed; // 🔹 допишіть код для руху вниз 🔹
 }
 
 // 🔸 Функція moveBall: Рухаємо мʼяч
+function moveBall() {
+  // Зміна координат
+  ball.x += ball.velocityX;
+  ball.y += ball.velocityY;
+}
 
 // 🔸 Функція checkWallBounces: Відбивання від стелі та підлоги
+function checkWallBounces() {
+  const hitTop = ball.y - ball.radius < 0; // Чи торкнувся стелі
+  const hitBottom = ball.y + ball.radius > gameHeight; // 🔹 чи координата y + радіус більша за gameHeight?
+
+  // Якщо торкнувся стелі АБО підлоги
+  if (hitTop || hitBottom) {
+    ball.velocityY *= -1; // розвертаємо м'яч
+  }
+}
 
 // 🔸 Функція checkCollision: Перевірємо зіткнення мʼяча та ракетки
 
@@ -138,6 +164,8 @@ function drawGame() {
 function update() {
   // Рухаємо об'єкти
   movePaddles();
+  moveBall();
+  checkWallBounces();
 
   // Малюємо новий кадр
   drawGame();
