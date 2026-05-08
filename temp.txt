@@ -1,0 +1,447 @@
+  <!-- 5.2 -->
+
+        <details class="accordion__item" name="section5">
+
+          <summary class="accordion__header">
+
+            <h2>
+
+              <span class="star">✧</span> Частина 5.2:
+
+              <span class="accent">Зручність</span>
+
+            </h2>
+
+            <span class="acc-arrow">▶</span>
+
+          </summary>
+
+
+
+          <div class="accordion__content">
+
+            <h3>Мета</h3>
+
+            <p>Покращити користувацький досвід (UI) нашої гри.</p>
+
+
+
+            <ol>
+
+              <li>
+
+                <span class="accent">Запуск.</span> Зробити так, щоб гра
+
+                починалася не одразу після завантаження сторінки, а лише після
+
+                натискання кнопки "Почати гру". І дати користувачеві трохи часу підготуватися до початку гри.
+
+              </li>
+
+              <li>
+
+                <span class="accent">Кінець гри.</span> Додати умову перемоги. Наприклад, перемагає той, хто перший забʼє три голи.
+
+              </li>
+
+            </ol>
+
+
+
+            <hr />
+
+
+
+            <h3>Крок 18. Кнопка старту</h3>
+
+
+
+            <p>
+
+              Зараз гра починається миттєво. Це не дуже зручно, адже гравець
+
+              може бути не готовий. Ми прив'яжемо запуск нашого ігрового циклу
+
+              (<span class="accent">update</span>) до події кліку по
+
+              кнопці <span class="accent">startBtn</span>.
+
+            </p>
+
+
+
+            <div class="soft-callout">
+
+              <h4>🧩 Завдання 18</h4>
+
+
+
+              <p>
+
+                Знайдіть у самому низу файлу розділ
+
+                <strong>"5. ЗАПУСК ГРИ"</strong>.
+
+                <span class="accent">Видаліть</span> звідти виклик
+
+                <code class="language-javascript nocopy">update();</code>, який
+
+                ми додали раніше.
+
+              </p>
+
+              <p>
+
+                Замість нього скопіюйте цей код, який покаже правила гри,
+
+                зробить невеличку паузу і лише потім запустить цикл:
+
+              </p>
+
+
+
+              <pre><code class="language-javascript">// Чекаємо на клік
+
+startBtn.addEventListener("click", () => {
+
+  // Показуємо правила гри у спливаючому вікні
+
+  alert(
+
+    "🏓 ПРАВИЛА ГРИ:\n\n" +
+
+      "• Ви керуєте лівою ракеткою, компʼютер — правою.\n" +
+
+      "• Клавіша 'W' рухає ракетку вгору, а 'S' — вниз.\n" +
+
+      "• Перемагає той, хто перший набере 3 бали.\n" +
+
+      "• М'яч прискорюється з кожним відбиванням!\n\n" +
+
+      "Успіхів!"
+
+  );
+
+
+
+  startBtn.disabled = true; // Вимикаємо кнопку
+
+  startBtn.textContent = "Приготуйтеся...";
+
+  
+
+  setTimeout(() => {
+
+    startBtn.textContent = "Гра почалася!";
+
+    update(); // Запускаємо гру через 1.5 секунди
+
+  }, 1500);
+
+});</code></pre>
+
+            </div>
+
+
+
+            <hr />
+
+
+
+            <h3>Крок 19. Кінець гри</h3>
+
+
+
+            <p>
+
+              Безкінечні ігри — це круто, але змагатися до певної кількості
+
+              балів набагато азартніше! У нас вже є змінна
+
+              <span class="accent-string">WINNING_SCORE</span> (вона дорівнює
+
+              3). Створимо функцію, яка перевірятиме, чи хтось досяг цієї цифри.
+
+            </p>
+
+
+
+            <div class="soft-callout">
+
+              <h4>🧩 Завдання 19</h4>
+
+
+
+              <p>
+
+                Знайдіть у розділі <strong>"3. ЛОГІКА ГРИ"</strong> коментар
+
+              </p>
+
+              <pre><code class="language-javascript nocopy">// 🔸 Функція gameOver: Завершення гри</code></pre>
+
+
+
+              <p>
+
+                Скопіюйте під нього функцію, яка покаже повідомлення про кінець
+
+                гри і скине рахунок до нуля:
+
+              </p>
+
+
+
+              <pre><code class="language-javascript">function gameOver() {
+
+  setTimeout(() => {
+
+    // Визначаємо переможця
+
+    if (score1 === WINNING_SCORE) alert(`Вітаю! Ви перемогли 🎉!`);
+
+    else alert(`Переміг компʼютер :( Спробуйте зіграти ще раз!`);
+
+
+
+    // Скидаємо рахунок
+
+    score1 = 0;
+
+    score2 = 0;
+
+    score1Element.textContent = score1;
+
+    score2Element.textContent = score2;
+
+
+
+    // Вмикаємо кнопку старту
+
+    startBtn.disabled = false;
+
+    startBtn.textContent = "Почати знову";
+
+  }, 10);
+
+}</code></pre>
+
+
+
+              <p>
+
+                Тепер перейдіть до вашої функції
+
+                <span class="accent-string">update()</span>. Додайте перед
+
+                рядком <code>requestAnimationFrame(update);</code> цю умову, яка
+
+                <b>зупинить цикл</b>:
+
+              </p>
+
+              <pre><code class="language-javascript">  // ПЕРЕВІРКА НА ПЕРЕМОГУ
+
+  if (score1 === WINNING_SCORE || score2 === WINNING_SCORE) {
+
+    gameOver();
+
+    return; // Ця команда миттєво зупиняє функцію!
+
+  }</code></pre>
+
+            </div>
+
+
+
+            <hr />
+
+
+
+            <h3>🎉 ВІТАЄМО! Гра завершена!</h3>
+
+            <p>
+
+              Ви самостійно створили справжню, повноцінну гру з нуля. Тепер ви
+
+              можете погратися з налаштуваннями на початку файлу (спробуйте
+
+              змінити кольори, швидкість гравця або ліміт швидкості м'яча), щоб
+
+              зробити її унікальною! Натисніть кнопку старту та спробуйте
+
+              обіграти комп'ютер!
+
+            </p>
+
+          </div>
+
+        </details>
+
+
+
+--- цю частину треба переписати.
+
+спершу потрібно додати кнопку в html: <button id="startBtn">Почати гру</button>
+
+потім додати для неї стилі в css: 
+
+button {
+
+        display: block;
+
+        cursor: pointer;
+
+        user-select: none;
+
+        font-size: 18px;
+
+        padding: 10px 20px;
+
+        margin: 25px auto 0;
+
+        background-color: navy;
+
+        color: white;
+
+        border: none;
+
+        border-radius: 5px;
+
+        border: 3px outset cornflowerblue;
+
+      }
+
+
+
+      button:not(:disabled):hover {
+
+        transform: scale(1.05);
+
+      }
+
+
+
+      button:not(:disabled):active {
+
+        transform: scale(0.95);
+
+      }
+
+
+
+      button:disabled {
+
+        cursor: default;
+
+        opacity: 0.65;
+
+      }
+
+
+
+тоді зберегти її у змінній в js:
+
+// 🔸 Кнопка для запуску гри
+
+const startBtn = document.querySelector("#startBtn");
+
+
+
+тоді додати eventListener:
+
+// Чекаємо на клік
+
+startBtn.addEventListener("click", function() {
+
+  startBtn.disabled = true; // Вимикаємо кнопку, щоб не натиснули двічі
+
+  startBtn.textContent = "Приготуйтеся...";
+
+  setTimeout(function() {
+
+    startBtn.textContent = "Гра почалася!";
+
+    update(); // Запускаємо головний цикл гри через 1.5 секунди
+
+  }, 1500);
+
+});
+
+
+
+тоді додати логіку завершення гри:
+
+function gameOver() {
+
+  // Використовуємо setTimeout, щоб браузер встиг намалювати останній кадр (м'яч у центрі)
+
+  setTimeout(function() {
+
+    // Визначаємо переможця і виводимо повідомлення
+
+    if (score1 === WINNING_SCORE) alert(`Вітаю! Ви перемогли 🎉!`);
+
+    else alert(`Переміг компʼютер :( Спробуйте зіграти ще раз!`);
+
+
+
+    // Скидаємо рахунок для наступної гри
+
+    score1 = 0;
+
+    score2 = 0;
+
+    score1Element.textContent = score1;
+
+    score2Element.textContent = score2;
+
+
+
+    // Знову вмикаємо кнопку старту
+
+    startBtn.disabled = false;
+
+    startBtn.textContent = "Почати знову";
+
+  }, 10);
+
+}
+
+
+
+та
+
+
+
+// 4. ПЕРЕВІРКА НА ПЕРЕМОГУ
+
+  if (score1 === WINNING_SCORE || score2 === WINNING_SCORE) {
+
+    gameOver();
+
+    return; // Ця команда миттєво зупиняє функцію, тому цикл переривається!
+
+  }
+
+
+
+і наостанок додати виведення правил гри (щоб гравець знав умову перемоги):
+
+// Показуємо правила гри у спливаючому вікні
+
+  alert(
+
+    "🏓 ПРАВИЛА ГРИ:\n\n" +
+
+      "• Ви керуєте лівою ракеткою, компʼютер — правою.\n" +
+
+      "• Клавіша 'W' рухає ракетку вгору, а 'S' — вниз.\n" +
+
+      "• Перемагає той, хто перший набере 3 бали.\n" +
+
+      "• М'яч прискорюється з кожним відбиванням!\n\n" +
+
+      "Успіхів!",
+
+  );

@@ -198,7 +198,7 @@ function resetBall() {
 // Завершення гри
 function gameOver() {
   // Використовуємо setTimeout, щоб браузер встиг намалювати останній кадр (м'яч у центрі)
-  setTimeout(() => {
+  setTimeout(function() {
     // Визначаємо переможця і виводимо повідомлення
     if (score1 === WINNING_SCORE) alert(`Вітаю! Ви перемогли 🎉!`);
     else alert(`Переміг компʼютер :( Спробуйте зіграти ще раз!`);
@@ -281,7 +281,7 @@ function update() {
 drawGame();
 
 // Чекаємо на клік
-startBtn.addEventListener("click", () => {
+startBtn.addEventListener("click", function() {
   // Показуємо правила гри у спливаючому вікні
   alert(
     "🏓 ПРАВИЛА ГРИ:\n\n" +
@@ -294,7 +294,7 @@ startBtn.addEventListener("click", () => {
 
   startBtn.disabled = true; // Вимикаємо кнопку, щоб не натиснули двічі
   startBtn.textContent = "Приготуйтеся...";
-  setTimeout(() => {
+  setTimeout(function() {
     startBtn.textContent = "Гра почалася!";
     update(); // Запускаємо головний цикл гри через 1.5 секунди
   }, 1500);
