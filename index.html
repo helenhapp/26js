@@ -1535,8 +1535,8 @@ return overlapX && overlapY;</code></pre>
 
               <p>
                 Створіть функцію
-                <span class="accent">checkScoring</span>. Всередину функції скопіюйте код
-                нижче та
+                <span class="accent">checkScoring</span>. Всередину функції
+                скопіюйте код нижче та
                 <span class="accent">допишіть рядки, яких не вистачає</span>:
               </p>
 
@@ -1571,7 +1571,8 @@ if (pastLeftWall || ❓) {
               Гра повністю працює! М'яч відбивається, і якщо він вилітає за
               екран, на табло змінюється рахунок, а м'яч знову з'являється по
               центру. Вітаємо, ви створили
-              <span class="accent">MVP (мінімальну робочу версію)</span> гри Pong!
+              <span class="accent">MVP (мінімальну робочу версію)</span> гри
+              Pong!
             </p>
           </div>
         </details>
@@ -1584,6 +1585,188 @@ if (pastLeftWall || ❓) {
           <summary class="accordion__header">
             <h2>
               <span class="star">✧</span> Частина 5.1:
+              <span class="accent">Цікавість</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <h3>Мета</h3>
+            <p>Зробити гру більш динамічною та збалансованою.</p>
+
+            <ol>
+              <li>
+                <span class="accent">Баланс бота.</span> Обмежити "зір"
+                комп'ютера, щоб його реально було перемогти.
+              </li>
+              <li>
+                <span class="accent">Прискорення.</span> Зробити так, щоб з
+                кожним відбиванням від ракетки м'яч ставав дедалі швидшим (і
+                повертався до базової швидкості після забивання голу).
+              </li>
+            </ol>
+
+            <hr />
+
+            <h3>Крок 16. Чесна гра</h3>
+
+            <p>
+              Зараз наш бот завжди знає, де м'яч. Через це його майже неможливо
+              обіграти. Ми зробимо його більш "неуважним": він не буде реагувати
+              на м'яч, поки той не перетне центральну лінію ігрового поля.
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 16</h4>
+
+              <p>
+                Знайдіть вашу функцію
+                <span class="accent">movePaddles()</span>. У секції "КОМП'ЮТЕР"
+                додайте перевірку зору бота (<span class="accent"
+                  >botSeesBall</span
+                >). Таким чином, бот почне бачити мʼяч тільки тоді, коли той вже
+                опиниться на його половині полотна.
+              </p>
+
+              <pre><code class="language-javascript">  // --- КОМП'ЮТЕР (Ракетка 2) ---
+  // 1. Перевіряємо, чи є місце для руху
+  const p2CanMoveUp = paddle2.y > 0;
+  const p2CanMoveDown = paddle2.y < gameHeight - paddle2.height;
+
+  // 2. Шукаємо центр ракетки комп'ютера
+  const p2Center = paddle2.y + paddle2.height / 2;
+  
+  // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
+  // Щоб дії бота не були ідеально точні
+  const botSeesBall = ball.x > gameWidth / 2; // 🌻 НОВЕ
+  
+  if (botSeesBall) { // 🌻 НОВЕ
+    // 3. Рухаємо ракетку за м'ячем
+    if (ball.y < p2Center && p2CanMoveUp) paddle2.y -= paddle2.speed;
+    else if (ball.y > p2Center && p2CanMoveDown) paddle2.y += paddle2.speed;
+  } // 🌻 НОВЕ
+  // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Крок 17. Додаємо драйву (Прискорення)</h3>
+
+            <p>
+              Грати на однаковій швидкості швидко набридає. Додамо правило:
+              кожне відбивання м'яча від ракетки потроху збільшує його
+              швидкість, аж поки він не досягне свого максимуму (<span
+                class="accent-string"
+                >maxSpeed</span
+              >).
+            </p>
+
+            <div class="soft-callout">
+              <h4>🧩 Завдання 17</h4>
+
+              <p>
+                Спочатку поверніться на самий початок файлу до розділу
+                <strong>"1. НАЛАШТУВАННЯ"</strong>. Знайдіть об'єкт 
+                <span class="accent">ball</span> та <span class="accent">додайте йому дві нові властивості</span>:
+              </p>
+
+              <pre><code class="language-javascript">const ball = {
+  // ... попередні властивості (x, y, radius, color, velocityX, velocityY) ...
+  baseSpeed: 5, // 🌻 НОВЕ: початкова швидкість
+  maxSpeed: 7, // 🌻 НОВЕ: ліміт швидкості
+};</code></pre>
+
+              <p>
+                Тепер знайдіть вашу функцію
+                <span class="accent">checkPaddleBounces()</span>. Замініть її на
+                цю оновлену версію, яка додає прискорення (<span
+                  class="accent-string"
+                  >a = 0.2</span
+                >):
+              </p>
+
+              <pre><code class="language-javascript">function checkPaddleBounces() {
+  // 1. Визначаємо, на чиїй половині поля зараз м'яч
+  const isLeftHalf = ball.x < gameWidth / 2;
+
+  // 2. Вибираємо ракетку для перевірки (ліву чи праву)
+  const activePaddle = isLeftHalf ? paddle1 : paddle2;
+
+  // 3. Перевіряємо, чи торкнувся м'яч цієї ракетки
+  const isCollision = checkCollision(ball, activePaddle);
+
+  // прискорення
+  const a = 0.2; // 🌻 НОВЕ
+  
+  if (isCollision) {
+    // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
+    // 🌻 НОВЕ:
+    // ПРИСКОРЕННЯ (якщо ще не досягли ліміту)
+    if (Math.abs(ball.velocityX) < ball.maxSpeed) {
+      // по осі x
+      if (ball.velocityX > 0) ball.velocityX += a;
+      else ball.velocityX -= a;
+
+      // по осі y
+      // 🔹 напишіть самостійно логіку прискорення для осі Y 🔹
+    }
+    // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
+
+    if (isLeftHalf) {
+      // Відбиваємо ВПРАВО (робимо швидкість додатною)
+      ball.velocityX = Math.abs(ball.velocityX);
+      // "Виштовхуємо" м'яч, щоб він не застряг у текстурі ракетки
+      ball.x = activePaddle.x + activePaddle.width + ball.radius;
+    } else {
+      // Відбиваємо ВЛІВО (робимо швидкість відʼємною)
+      ball.velocityX = -Math.abs(ball.velocityX);
+      // "Виштовхуємо" м'яч з правої ракетки
+      ball.x = activePaddle.x - ball.radius;
+    }
+  }
+}</code></pre>
+
+              <p>
+                Також потрібно оновити функцію
+                <span class="accent">resetBall()</span>, щоб після кожного голу
+                швидкість м'яча поверталася назад до початкової (<span
+                  class="accent"
+                  >baseSpeed</span
+                >):
+              </p>
+
+              <pre><code class="language-javascript">function resetBall() {
+  ball.x = gameWidth / 2;
+  ball.y = gameHeight / 2;
+
+  // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
+  // 🌻 НОВЕ:
+  // Скидаємо швидкість по X і віддаємо м'яч тому, хто пропустив
+  if (ball.velocityX > 0) ball.velocityX = -ball.baseSpeed;
+  else ball.velocityX = ball.baseSpeed;
+
+  // Скидаємо швидкість по Y, зберігаючи напрямок
+  if (ball.velocityY > 0) ball.velocityY = ball.baseSpeed;
+  else ball.velocityY = -ball.baseSpeed;
+  // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
+}</code></pre>
+            </div>
+
+            <hr />
+
+            <h3>Очікуваний результат на цьому етапі:</h3>
+            <p>
+              Тепер бот реагує на м'яч лише на своїй половині поля, а сам м'яч
+              помітно прискорюється під час довгої гри!
+            </p>
+          </div>
+        </details>
+
+        <!-- 5.2 -->
+        <details class="accordion__item" name="section5">
+          <summary class="accordion__header">
+            <h2>
+              <span class="star">✧</span> Частина 5.2:
               <span class="accent">Зручність</span>
             </h2>
             <span class="acc-arrow">▶</span>
@@ -1607,7 +1790,7 @@ if (pastLeftWall || ❓) {
 
             <hr />
 
-            <h3>Крок 16. Кнопка старту</h3>
+            <h3>Крок 18. Кнопка старту</h3>
 
             <p>
               Зараз гра починається миттєво. Це не дуже зручно, адже гравець
@@ -1617,7 +1800,7 @@ if (pastLeftWall || ❓) {
             </p>
 
             <div class="soft-callout">
-              <h4>🧩 Завдання 16</h4>
+              <h4>🧩 Завдання 18</h4>
 
               <p>
                 Знайдіть у самому низу файлу розділ
@@ -1655,7 +1838,7 @@ startBtn.addEventListener("click", () => {
 
             <hr />
 
-            <h3>Крок 17. Кінець гри</h3>
+            <h3>Крок 19. Кінець гри</h3>
 
             <p>
               Безкінечні ігри — це круто, але змагатися до певної кількості
@@ -1665,7 +1848,7 @@ startBtn.addEventListener("click", () => {
             </p>
 
             <div class="soft-callout">
-              <h4>🧩 Завдання 17</h4>
+              <h4>🧩 Завдання 19</h4>
 
               <p>
                 Знайдіть у розділі <strong>"3. ЛОГІКА ГРИ"</strong> коментар
@@ -1710,157 +1893,13 @@ startBtn.addEventListener("click", () => {
 
             <hr />
 
-            <h3>Очікуваний результат на цьому етапі:</h3>
-            <p>
-              Натисніть кнопку старту. Гра зупиниться і покаже переможне (або
-              програшне) повідомлення, щойно хтось набере 3 бали!
-            </p>
-          </div>
-        </details>
-
-        <!-- 5.2 -->
-        <details class="accordion__item" name="section5">
-          <summary class="accordion__header">
-            <h2>
-              <span class="star">✧</span> Частина 5.2:
-              <span class="accent">Цікавість</span>
-            </h2>
-            <span class="acc-arrow">▶</span>
-          </summary>
-
-          <div class="accordion__content">
-            <h3>Мета</h3>
-            <p>Зробити гру більш динамічною та збалансованою (Game Feel).</p>
-
-            <ol>
-              <li>
-                <span class="accent">Прискорення.</span> Зробити так, щоб з
-                кожним відбиванням м'яч ставав дедалі швидшим.
-              </li>
-              <li>
-                <span class="accent">Баланс бота.</span> Обмежити "зір"
-                комп'ютера, щоб його можна було перемогти.
-              </li>
-            </ol>
-
-            <hr />
-
-            <h3>Крок 18. Додаємо драйву (Прискорення)</h3>
-
-            <p>
-              Грати на однаковій швидкості швидко набридає. Додамо правило:
-              кожне відбивання м'яча від ракетки потроху збільшує його
-              швидкість, аж поки він не досягне свого максимуму (<span
-                class="accent-string"
-                >maxSpeed</span
-              >).
-            </p>
-
-            <div class="soft-callout">
-              <h4>🧩 Завдання 18</h4>
-
-              <p>
-                Знайдіть вашу функцію
-                <span class="accent-string">checkPaddleBounces()</span>.
-                Замініть її на цю оновлену версію, яка додає прискорення (<span
-                  class="accent-string"
-                  >a = 0.2</span
-                >):
-              </p>
-
-              <pre><code class="language-javascript">function checkPaddleBounces() {
-  const isLeftHalf = ball.x < gameWidth / 2;
-  const activePaddle = isLeftHalf ? paddle1 : paddle2;
-  const isCollision = checkCollision(ball, activePaddle);
-  const a = 0.2; // Прискорення
-  
-  if (isCollision) {
-    // 1. ПРИСКОРЕННЯ (якщо ще не досягли ліміту)
-    if (Math.abs(ball.velocityX) < ball.maxSpeed) {
-      if (ball.velocityX > 0) ball.velocityX += a;
-      else ball.velocityX -= a;
-      if (ball.velocityY > 0) ball.velocityY += a;
-      else ball.velocityY -= a;
-    }
-
-    // 2. ВІДБИВАННЯ
-    if (isLeftHalf) {
-      ball.velocityX = Math.abs(ball.velocityX);
-      ball.x = activePaddle.x + activePaddle.width + ball.radius; 
-    } else {
-      ball.velocityX = -Math.abs(ball.velocityX);
-      ball.x = activePaddle.x - ball.radius; 
-    }
-  }
-}</code></pre>
-
-              <p>
-                Також оновіть функцію
-                <span class="accent-string">resetBall()</span>, щоб після
-                кожного голу швидкість м'яча падала назад до початкової (<span
-                  class="accent-string"
-                  >baseSpeed</span
-                >):
-              </p>
-
-              <pre><code class="language-javascript">function resetBall() {
-  ball.x = gameWidth / 2;
-  ball.y = gameHeight / 2;
-
-  // Скидаємо швидкість по X і віддаємо м'яч тому, хто пропустив
-  if (ball.velocityX > 0) ball.velocityX = -ball.baseSpeed;
-  else ball.velocityX = ball.baseSpeed;
-
-  // Скидаємо швидкість по Y, зберігаючи напрямок
-  if (ball.velocityY > 0) ball.velocityY = ball.baseSpeed;
-  else ball.velocityY = -ball.baseSpeed;
-}</code></pre>
-            </div>
-
-            <hr />
-
-            <h3>Крок 19. Чесна гра</h3>
-
-            <p>
-              Зараз наш бот завжди знає, де м'яч. Ми зробимо його "неуважним":
-              він не буде реагувати на м'яч, поки той не перетне центральну
-              лінію поля!
-            </p>
-
-            <div class="soft-callout">
-              <h4>🧩 Завдання 19</h4>
-
-              <p>
-                Знайдіть вашу функцію
-                <span class="accent-string">movePaddles()</span>. У секції
-                "КОМП'ЮТЕР" додайте перевірку зору бота (<span
-                  class="accent-string"
-                  >botSeesBall</span
-                >):
-              </p>
-
-              <pre><code class="language-javascript">  // --- КОМП'ЮТЕР (Ракетка 2) ---
-  const p2CanMoveUp = paddle2.y > 0;
-  const p2CanMoveDown = paddle2.y < gameHeight - paddle2.height;
-  const p2Center = paddle2.y + paddle2.height / 2;
-  
-  // Щоб дії бота не були ідеально точні
-  const botSeesBall = ball.x > gameWidth / 2;
-  
-  if (botSeesBall) {
-    if (ball.y < p2Center && p2CanMoveUp) paddle2.y -= paddle2.speed;
-    else if (ball.y > p2Center && p2CanMoveDown) paddle2.y += paddle2.speed;
-  }</code></pre>
-            </div>
-
-            <hr />
-
             <h3>🎉 ВІТАЄМО! Гра завершена!</h3>
             <p>
               Ви самостійно створили справжню, повноцінну гру з нуля. Тепер ви
               можете погратися з налаштуваннями на початку файлу (спробуйте
               змінити кольори, швидкість гравця або ліміт швидкості м'яча), щоб
-              зробити її унікальною!
+              зробити її унікальною! Натисніть кнопку старту та спробуйте
+              обіграти комп'ютер!
             </p>
           </div>
         </details>

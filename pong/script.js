@@ -48,6 +48,8 @@ const ball = {
   color: "darkblue",
   velocityX: 5,
   velocityY: 5,
+  baseSpeed: 5, 
+  maxSpeed: 7,
 };
 
 // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
@@ -95,9 +97,14 @@ function movePaddles() {
   // 2. Шукаємо центр ракетки комп'ютера
   const p2Center = paddle2.y + paddle2.height / 2;
 
-  // 3. Рухаємо ракетку за м'ячем
-  if (ball.y < p2Center && p2CanMoveUp) paddle2.y -= paddle2.speed;
-  else if (ball.y > p2Center && p2CanMoveDown) paddle2.y += paddle2.speed; // 🔹 допишіть код для руху вниз 🔹
+  // Щоб дії бота не були ідеально точні
+  const botSeesBall = ball.x > gameWidth / 2;
+
+  if (botSeesBall) {
+    // 3. Рухаємо ракетку за м'ячем
+    if (ball.y < p2Center && p2CanMoveUp) paddle2.y -= paddle2.speed;
+    else if (ball.y > p2Center && p2CanMoveDown) paddle2.y += paddle2.speed; // 🔹 допишіть код для руху вниз 🔹
+  }
 }
 
 // 🔸 Функція moveBall: Рухаємо мʼяч
@@ -152,8 +159,22 @@ function checkPaddleBounces() {
   // 3. Перевіряємо, чи торкнувся м'яч цієї ракетки
   const isCollision = checkCollision(ball, activePaddle);
 
+  const a = 0.2;
+
   // 4. Якщо торкнувся — відбиваємо!
   if (isCollision) {
+    // ПРИСКОРЕННЯ (якщо ще не досягли ліміту)
+    if (Math.abs(ball.velocityX) < ball.maxSpeed) {
+      // по осі x
+      if (ball.velocityX > 0) ball.velocityX += a;
+      else ball.velocityX -= a;
+
+      // по осі y
+      // 🔹 напишіть самостійно логіку прискорення для осі Y 🔹
+      if (ball.velocityY > 0) ball.velocityY += a;
+      else ball.velocityY -= a;
+    }
+
     if (isLeftHalf) {
       // Відбиваємо ВПРАВО (робимо швидкість додатною)
       ball.velocityX = Math.abs(ball.velocityX);
@@ -194,6 +215,14 @@ function checkScoring() {
 function resetBall() {
   ball.x = gameWidth / 2; // 🔹 половина ширини полотна
   ball.y = gameHeight / 2; // 🔹 половина висоти полотна
+
+  // Скидаємо швидкість по X і віддаємо м'яч тому, хто пропустив
+  if (ball.velocityX > 0) ball.velocityX = -ball.baseSpeed;
+  else ball.velocityX = ball.baseSpeed;
+
+  // Скидаємо швидкість по Y, зберігаючи напрямок
+  if (ball.velocityY > 0) ball.velocityY = ball.baseSpeed;
+  else ball.velocityY = -ball.baseSpeed;
 }
 
 // 🔸 Функція gameOver: Завершення гри
