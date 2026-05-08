@@ -18,7 +18,10 @@ let score1 = 0;
 const score2Element = document.querySelector("#s2");
 let score2 = 0;
 
+const WINNING_SCORE = 3;
+
 // 🔸 Кнопка для запуску гри
+const startBtn = document.querySelector("#startBtn");
 
 // 🔸 Ракетка 1 (ліва)
 const paddle1 = {
@@ -48,7 +51,7 @@ const ball = {
   color: "darkblue",
   velocityX: 5,
   velocityY: 5,
-  baseSpeed: 5, 
+  baseSpeed: 5,
   maxSpeed: 7,
 };
 
@@ -226,6 +229,27 @@ function resetBall() {
 }
 
 // 🔸 Функція gameOver: Завершення гри
+function gameOver() {
+  // Використовуємо setTimeout, щоб браузер встиг намалювати останній кадр
+  setTimeout(function () {
+    // Визначаємо переможця
+    if (score1 === WINNING_SCORE) alert(`Вітаю! Ви перемогли 🎉!`);
+    else alert(`Переміг компʼютер :( Спробуйте зіграти ще раз!`);
+
+    // Скидаємо рахунок 1-го гравця для наступної гри
+    score1 = 0;
+    score1Element.textContent = score1;
+
+    // Скидаємо рахунок 2-го гравця для наступної гри
+    // 🔹 Допишіть код для 2-го гравця 🔹
+    score2 = 0;
+    score2Element.textContent = score2;
+
+    // Знову вмикаємо кнопку старту
+    startBtn.disabled = false;
+    startBtn.textContent = "Почати знову";
+  }, 10);
+}
 
 // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
 // ✨ 4. МАЛЮВАННЯ ТА АНІМАЦІЯ ✨
@@ -271,11 +295,18 @@ function update() {
   // Малюємо новий кадр
   drawGame();
 
+  // ПЕРЕВІРКА НА ПЕРЕМОГУ
+  if (score1 === WINNING_SCORE || score2 === WINNING_SCORE) {
+    // 🔹 Викличте функцію gameOver 🔹
+    gameOver();
+    return; // Зупиняємо функцію, щоб цикл перервався
+  }
+
   // 3. Повторюємо цикл нескінченно
   requestAnimationFrame(update);
 }
 
-update();
+// update();
 
 // - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦
 // ✨ 5. ЗАПУСК ГРИ ✨
@@ -285,3 +316,25 @@ update();
 drawGame();
 
 // 🔸 Чекаємо на клік (addEventListener("click", ...))
+startBtn.addEventListener("click", function () {
+  // 1. Показуємо правила гри
+  alert(
+    "🏓 ПРАВИЛА ГРИ:\n\n" +
+      "• Ви керуєте лівою ракеткою, компʼютер — правою.\n" +
+      "• Клавіша 'W' рухає ракетку вгору, а 'S' — вниз.\n" +
+      "• Перемагає той, хто перший набере 3 бали.\n" +
+      "• М'яч прискорюється з кожним відбиванням!\n\n" +
+      "Успіхів!",
+  );
+
+  // 2. Готуємося до старту
+  startBtn.disabled = true; // Вимикаємо кнопку, щоб не натиснули двічі
+  startBtn.textContent = "Приготуйтеся...";
+
+  setTimeout(function () {
+    // 🔹 Змініть текст кнопки на "Гра почалася!" 🔹
+    startBtn.textContent = "Гра почалася!";
+    // 🔹 Викличте функцію update 🔹
+    update();
+  }, 1500);
+});
