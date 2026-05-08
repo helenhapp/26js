@@ -149,6 +149,14 @@ main {
   flex-grow: 1;
 }
 
+code,
+pre,
+.custom-editor-input,
+.custom-editor-output,
+textarea {
+  font-variant-ligatures: none;
+}
+
 /* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
 /* 🌸 3. ГЛОБАЛЬНІ АНІМАЦІЇ ПЕРЕХОДІВ */
 /* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
@@ -1069,7 +1077,7 @@ code {
 }
 
 code.long-code {
-  white-space: pre-wrap !important;
+  white-space: pre !important;
   word-break: normal !important;
   overflow-wrap: normal !important;
 }
@@ -1770,7 +1778,7 @@ table.hljs-ln tr:hover {
 }
 
 code.long-code .hljs-ln td.hljs-ln-code {
-  white-space: pre-wrap !important;
+  white-space: pre !important;
   word-break: normal !important;
   overflow-wrap: anywhere !important;
   hyphens: none !important;

@@ -42,7 +42,7 @@ function buildNavigation() {
           </span>
         </label>
         <button id="wide-mode-btn" class="wide-toggle" title="Широкий екран">🖥️</button>
-        <button class="hamburger-btn" aria-label="Відкрити меню">🍔</button>
+        <button class="hamburger-btn" aria-label="Відкрити меню">🚀</button>
       </div>
     </nav>
   `;

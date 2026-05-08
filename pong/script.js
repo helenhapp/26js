@@ -119,12 +119,82 @@ function checkWallBounces() {
 }
 
 // 🔸 Функція checkCollision: Перевірємо зіткнення мʼяча та ракетки
+function checkCollision(ball, paddle) {
+  // 1. Визначаємо краї м'яча
+  const ballTop = ball.y - ball.radius; // верхній край
+  const ballLeft = ball.x - ball.radius; // лівий край
+  const ballBottom = ball.y + ball.radius; // 🔹 нижній
+  const ballRight = ball.x + ball.radius; // 🔹 правий
+
+  // 2. Визначаємо краї ракетки
+  const paddleTop = paddle.y; // верх
+  const paddleLeft = paddle.x; // ліво
+  const paddleBottom = paddle.y + paddle.height; // 🔹 низ
+  const paddleRight = paddle.x + paddle.width; // 🔹 право
+
+  // 3. Перевіряємо, чи перетинаються вони по X та Y
+  const overlapX = ballRight >= paddleLeft && ballLeft <= paddleRight;
+  const overlapY = ballBottom >= paddleTop && ballTop <= paddleBottom;
+
+  // 4. Повертаємо результат
+  // true — якщо є зіткнення, false — якщо немає
+  return overlapX && overlapY;
+}
 
 // 🔸 Функція checkPaddleBounces: Відбивання від ракеток
+function checkPaddleBounces() {
+  // 1. Визначаємо, на чиїй половині поля зараз м'яч
+  const isLeftHalf = ball.x < gameWidth / 2;
+
+  // 2. Вибираємо ракетку для перевірки (ліву чи праву)
+  const activePaddle = isLeftHalf ? paddle1 : paddle2;
+
+  // 3. Перевіряємо, чи торкнувся м'яч цієї ракетки
+  const isCollision = checkCollision(ball, activePaddle);
+
+  // 4. Якщо торкнувся — відбиваємо!
+  if (isCollision) {
+    if (isLeftHalf) {
+      // Відбиваємо ВПРАВО (робимо швидкість додатною)
+      ball.velocityX = Math.abs(ball.velocityX);
+      // "Виштовхуємо" м'яч, щоб він не застряг у текстурі ракетки
+      ball.x = activePaddle.x + activePaddle.width + ball.radius;
+    } else {
+      // Відбиваємо ВЛІВО (робимо швидкість відʼємною)
+      ball.velocityX = -Math.abs(ball.velocityX);
+      // "Виштовхуємо" м'яч з правої ракетки
+      ball.x = activePaddle.x - ball.radius;
+    }
+  }
+}
 
 // 🔸 Функція checkScoring: Якщо м'яч вилетів за екран — це гол
+function checkScoring() {
+  const pastLeftWall = ball.x + ball.radius < 0; // чи мʼяч перетнув лівий край полотна
+  const pastRightWall = ball.x - ball.radius > gameWidth; // чи мʼяч перетнув правий край полотна
+
+  // 🔹 допишіть умову всередині if 🔹
+  if (pastLeftWall || pastRightWall) {
+    // Оновлюємо рахунок у пам'яті комп'ютера
+    const isLeftHalf = ball.x < gameWidth / 2;
+    isLeftHalf ? score2++ : score1++;
+
+    // Оновлюємо текст на екрані
+    score1Element.textContent = score1; // рахунок 1-го гравця
+    // 🔹 допишіть код для 2-го гравця 🔹
+    score2Element.textContent = score2;
+
+    // Повертаємо м'яч
+    // 🔹 викличте функцію resetBall 🔹
+    resetBall();
+  }
+}
 
 // 🔸 Функція resetBall: Повертаємо м'яч у центр полотна та скидаємо швидкість
+function resetBall() {
+  ball.x = gameWidth / 2; // 🔹 половина ширини полотна
+  ball.y = gameHeight / 2; // 🔹 половина висоти полотна
+}
 
 // 🔸 Функція gameOver: Завершення гри
 
@@ -166,6 +236,8 @@ function update() {
   movePaddles();
   moveBall();
   checkWallBounces();
+  checkPaddleBounces();
+  checkScoring();
 
   // Малюємо новий кадр
   drawGame();
